@@ -95,19 +95,18 @@
                             <div class="col-md-6 col-md-offset-2">
                                 <a href="#" class="active" id="login-form-link">Sign up</a>
                             </div>
-                            <div class="col-xs-6" hidden>
-                                <a href="#" id="register-form-link">Login</a>
-                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-9 col-md-offset-2 mx-auto text-center">
                             <div class="myform form ">
                                 <form class="formValidate" id="contactForm" action="" method="post" name="login"    e.preventDefault();>
+                                    {{ csrf_field() }}
                                     <div class="form-group">
                                         <h1 class="formersid"></h1>
                                     </div>
                                     <div class="form-group">
+                                        <input type="hidden" value="{{ Session::token() }}" id="token">
                                         <input type="text" name="fullname"  class="form-control my-input" id="name1" placeholder="Name" required>
                                     </div>
                                     <div class="form-group">
@@ -151,6 +150,5 @@
 @endsection
 @section('js')
     <script src="{{asset('frontend/js/SignUp.js')}}"></script>
-    <script src="{{asset('frontend/js/login.js')}}"></script>
 
 @endsection

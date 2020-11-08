@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('level');
             $table->string('code')->nullable();
-            $table->integer('status');
+            $table->boolean('status');
             $table->foreignId('current_team_id')->nullable();
             $table->text('profile_photo_path')->nullable();
             $table->timestamp('email_verified_at')->nullable();

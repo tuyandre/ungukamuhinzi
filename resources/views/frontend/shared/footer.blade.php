@@ -17,7 +17,7 @@
             <div class="col-md-4 footer"  style="background-color:#87D37C;padding: 20px">
                 <h2 class="text-center">Reach us</h2>
                 <div class="col-md-8 col-md-offset-3">
-                    <i class="fa fa-phone" aria-hidden="true"></i><a href="tel:99-999-999-9999">99-999-999-9999</a>
+                    <i class="fa fa-phone" aria-hidden="true"></i><a href="tel:250788-866-742">250788-866-742</a>
                 </div>
                 <div class="col-md-8 col-md-offset-3">
                     <i class="fa fa-phone" aria-hidden="true"></i><a href="tel:99-999-999-9999">Kicukiro,kagarama</a>

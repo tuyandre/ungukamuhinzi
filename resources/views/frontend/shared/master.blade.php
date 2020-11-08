@@ -11,7 +11,6 @@
     <title>@yield('title') | Ungukamuhinzi</title>
 
     <!-- Favicon and Touch Icons -->
-    <link href="{{asset('/images/favicon.ico')}}" rel="shortcut icon">
     <link href="{{asset('/frontend/assets/logo.png')}}" rel="shortcut icon" type="image/png">
 
     <!-- Stylesheet -->
@@ -19,16 +18,15 @@
     <link rel='stylesheet' href='{{asset('frontend/dist/fontawesome/css/v4-shims.css')}}'>
     <link rel='stylesheet' href='{{asset('frontend/dist/fontawesome/css/brands.css')}}'>
     <link rel='stylesheet' href='{{asset('frontend/dist/fontawesome/css/all.min.css')}}'>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <link rel="stylesheet" href="{{asset('frontend/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/all.min.css')}}">
-{{--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>--}}
     <link rel="stylesheet" href="{{asset("frontend/css/bootstrap-grid.css")}}">
     <link rel="stylesheet" href="{{asset("frontend/css/bootstrap-grid.min.css")}}">
     <link rel="stylesheet" type="text/css" href="{{asset("frontend/css/scrollbar.css")}}">
     <link rel="stylesheet" type="text/css" href="{{asset("frontend/css/style.css")}}">
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/css/responsevness.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset("frontend/css/clientnavabar.css")}}">
+    <script src="{{asset("frontend/js/jquery.js")}}"></script>
     <script src="{{asset("frontend/js/jquery.min.js")}}"></script>
     <script src="{{asset("frontend/js/bootstrap.min.js")}}"></script>
     @yield('css')

@@ -8,10 +8,10 @@
     p{
         color: black !important;
     }
-	input[type=number]::-webkit-inner-spin-button, 
-	input[type=number]::-webkit-outer-spin-button { 
-	  -webkit-appearance: none; 
-	  margin: 0; 
+	input[type=number]::-webkit-inner-spin-button,
+	input[type=number]::-webkit-outer-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
     }
     .farm-text .previous-button {
         height: 24px;
@@ -52,7 +52,7 @@
 	color:#fff;
 	padding: 8px 25px;
     }
-    
+
 
 
 	.my-input{
@@ -252,7 +252,7 @@ margin-top: 20px;
     border-radius: 33.1693px;
     padding: 10px;
     border: none;
-	
+
 }
 .btn-register1 {
     color: #fff;
@@ -309,7 +309,7 @@ color:#304f50;
 font-weight: 500;
 margin: 1rem 0;
 padding: .4rem 0px;
-border-bottom: 1px solid #c7c7c7; 
+border-bottom: 1px solid #c7c7c7;
 letter-spacing: 3px;
 }
 
@@ -339,6 +339,7 @@ background-color: #555;
 }
 
 #bottom-footer {
+/*background-color:#87D37C;*/
 background-color:#87D37C;
 color:white;
 margin-top: 2rem;
@@ -372,7 +373,7 @@ width: 120px;
 	color: white;
 }
 .murego li{
-	background-color:white; 
+	background-color:white;
 }
 .fa {
     padding:4px;
@@ -383,16 +384,16 @@ width: 120px;
     margin: 10px 0px;
     border-radius: 16px;
 }
-  
+
   .fa:hover {
 	  opacity: 0.7;
   }
-  
+
   .fa-facebook {
 	background: white;
 	color: #87D37C;
   }
-  
+
   .fa-instagram {
 	background:white;
 	color:#87D37C;
@@ -485,7 +486,7 @@ width: 120px;
 } */
 .card-desc .text-left{
 	margin-left: -39px;
-	
+
 }
 
 /* SEARCH OF JOME PAGES */
@@ -493,7 +494,7 @@ width: 120px;
 .inner-addon {
     position: relative;
   }
-  
+
   /* style glyph */
   .inner-addon .glyphicon {
     /* position: absolute; */
@@ -509,15 +510,15 @@ width: 120px;
     pointer-events: none;
     color: #aaa;
   }
-  
+
   /* align glyph */
   .left-addon .glyphicon  { left:  0px;}
   .right-addon .glyphicon { left: 0px;}
-  
+
   /* add padding  */
   .left-addon input  { padding-left:  30px; }
   .right-addon input { padding-right: 30px; }
-  
+
   .search input[type="text"], .search select[type="select"] {
     height: 45px;
     background: #FFFFFF;
@@ -682,11 +683,11 @@ margin-top: 14px;
         position: relative;
         width: 58px;
     }
-      
+
       .switch input {
         display:none;
       }
-      
+
       .slider {
         background-color: #ccc;
         bottom: 0;
@@ -697,7 +698,7 @@ margin-top: 14px;
         top: 0;
         transition: .4s;
       }
-      
+
       .slider:before {
         background-color: #fff;
         bottom: 4px;
@@ -708,19 +709,19 @@ margin-top: 14px;
         transition: .4s;
         width: 26px;
       }
-      
+
       input:checked + .slider {
         background-color: #66bb6a;
       }
-      
+
       input:checked + .slider:before {
         transform: translateX(26px);
       }
-      
+
       .slider.round {
         border-radius: 34px;
       }
-      
+
       .slider.round:before {
         border-radius: 50%;
       }
@@ -753,7 +754,7 @@ margin-top: 14px;
         height: 81px;
         background:none;
         box-shadow: none;
-        border-radius: 8px;  
+        border-radius: 8px;
     }
     .nav-img img {
         height: 52px;
@@ -779,7 +780,7 @@ margin-top: 14px;
         position: relative;
         top: 17px;
         font-size:21px;
-        font-weight: bold; 
+        font-weight: bold;
     }
     .secand-cards{
         margin-top: -174px;
@@ -805,7 +806,7 @@ margin-top: 14px;
     /* RADIO BUTTON HERE */
     /* The radio */
 .radio {
- 
+
    display: block;
    position: relative;
    padding-left: 30px;
@@ -865,10 +866,10 @@ margin-top: 14px;
    width: 12px;
    height: 12px;
    border-radius: 50%;
-   background: #87D37C;   
+   background: #87D37C;
 }
 #loginjjj{
-        border:none; 
+        border:none;
         border-radius:none;
         -webkit-box-shadow:none;
         box-shadow:none;
@@ -920,7 +921,7 @@ border-radius: 14.439px;
 .left-header p, a{
 color: white;
 text-decoration: none;
-} 
+}
 .left-header p, a:hover, :focus {
     color:#5BD04A;;
     background-color:white;
@@ -950,11 +951,11 @@ text-decoration: none;
 
 
 /* MODAL form */
-.modal-login {		
+.modal-login {
     color: #636363;
     width: 300px;
     /* height: 60px; */
-    
+
 }
 .modal-login .modal-content {
     padding: 20px;
@@ -962,7 +963,7 @@ text-decoration: none;
     border: none;
 }
 .modal-login .modal-header {
-    border-bottom: none;   
+    border-bottom: none;
     position: relative;
     justify-content: center;
 }
@@ -975,8 +976,8 @@ text-decoration: none;
     position: absolute;
     top: -5px;
     right: -5px;
-}	
-	
+}
+
 .modal-login.modal-dialog {
     margin-top: 80px;
 }
@@ -987,7 +988,7 @@ text-decoration: none;
     background: #FFFFFF;
 border-radius: 8px;
 /* margin-top: 214px; */
--webkit-box-shadow:none; 
+-webkit-box-shadow:none;
  box-shadow: none;
  height: 415px;
 }
@@ -1062,7 +1063,7 @@ padding: 8px;
     box-shadow: 0px 1.50769px 36.1846px rgba(0, 0, 0, 0.12);
     border-radius: 4.0615px;
     height: 499px;
-    
+
 
 
     /* border-radius: 0.25rem; */
@@ -1079,8 +1080,8 @@ box-shadow: 0px 1.625px 13px rgba(0, 0, 0, 0.05);
 border-radius: 6.5px
 }
 #signupPanel{
-    margin-top:16px; 
-    padding: 15px; 
+    margin-top:16px;
+    padding: 15px;
     /* height: 30%; */
 }
 #sign-up-panel{
@@ -1371,7 +1372,7 @@ margin-top: 28px;
     background: #FCFBFB;
     box-shadow: 0px 1.50769px 36.1846px rgba(0, 0, 0, 0.12);
     border-radius: 12.0615px;
-    
+
 }
 .My-Jesus{
     margin-top: -65px;
@@ -1413,7 +1414,7 @@ border-radius: 8px;
     border-radius: 6.45561px;
     height: 79px;
     padding: 13px;
-   
+
 }
 #getTimes{
     width: 42px;
@@ -1565,7 +1566,7 @@ border-radius: 8px;
 	box-sizing: border-box;
 	width: 80%;
 	margin: 0 10%;
-	
+
 	/*stacking fieldsets above each other*/
 	position: relative;
 }
@@ -1654,7 +1655,7 @@ border-radius: 8px;
 }
 #progressbar li:first-child:after {
 	/*connector not needed before the first step*/
-	content: none; 
+	content: none;
 }
 /*marking active/completed steps green*/
 /*The number of the step and the connector before it = green*/
@@ -1695,7 +1696,7 @@ border-radius: 5.11111px!important;
     box-shadow: 0px 5.30709px 10.6142px rgba(135, 211, 124, 0.25);
     border-radius: 33.1693px;
     padding: 10px;
-    border: none;  
+    border: none;
 }
 .form-group .AddNewfarm{
     height: 45px;
@@ -1708,7 +1709,7 @@ border-radius: 5.11111px!important;
     box-shadow: 0px 0px 15.05px rgba(0, 0, 0, 0.09);
     border-radius: 5.02624px;
     padding: 10px;
-    height: 60px;   
+    height: 60px;
 }
 .AddNewfarm select{
     height: 45px!important;
@@ -1721,7 +1722,7 @@ border-radius: 5.11111px!important;
     box-shadow: 0px 0px 15.05px rgba(0, 0, 0, 0.09)!important;
     border-radius: 5.02624px!important;
     padding: 10px!important;
-    height: 60px!important;   
+    height: 60px!important;
 }
 .modal-footer{
     border-top: none;
@@ -1749,7 +1750,7 @@ input#phones1{
     box-shadow: 0px 0px 15.05px rgba(0, 0, 0, 0.09);
     border-radius: 5.02624px;
     padding: 10px;
-    height: 53px;   
+    height: 53px;
 }
 button#addinstock{
     color: #fff;
@@ -1759,7 +1760,7 @@ button#addinstock{
     box-shadow: 0px 5.30709px 10.6142px rgba(135, 211, 124, 0.25);
     border-radius: 33.1693px;
     padding: 10px;
-    border: none;   
+    border: none;
 }
 img#card-image {
     height: auto;
@@ -1834,7 +1835,7 @@ img#card-image {
     background: white;
 
  }
- 
+
  .preview1 img{
     border-radius: 40px;
  }
@@ -1854,7 +1855,7 @@ img#card-image {
     box-shadow: 0px 5.30709px 10.6142px rgba(135, 211, 124, 0.25);
     border-radius: 33.1693px;
     padding: 10px;
-    border: none;    
+    border: none;
  }
  #update{
      color: green;

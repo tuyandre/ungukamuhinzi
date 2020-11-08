@@ -4,28 +4,30 @@ $(document).ready(function(){
       let jwt1 = localStorage.getItem("customer-Id");
       console.log(jwt1);
       $("h1.formersid").append('<input type="text" id="farmerid" name="level" value='+jwt+' hidden>');
-      
-    var endpoint = "http://178.79.188.142:90/api/registration";
+
+    var endpoint = "/Ungukamuhinzi/register/user";
     $("button#signup-id10222").click(function(e){
         e.preventDefault();
         var fullName =document.querySelector("input#name1").value;
         var Phone = document.querySelector("input#emailg111").value;
         var Password =document.querySelector("input#password").value;
+        var token = document.querySelector("input#token").value;
         var repeatpassword = document.querySelector("input#password11").value;
         var level =document.querySelector("input#farmerid").value;
         if(fullName === "" || Phone=== "" || Password === "" || repeatpassword=== ""){
-            
+
             $("div#loginSucces").attr("class"," alert alert-danger")
             $("div#loginSucces").html("Please You must Fill the form").css("display","block");
            setTimeout(()=>{
         $("div#loginSucces").fadeOut();
         },1500)
-       
+
     }
     else{
         let farmer1 ={
             fullname:fullName,
             phone:Phone,
+            _token:token,
             password:Password,
             confirmPassword:repeatpassword ,
             level:level
@@ -45,15 +47,7 @@ $(document).ready(function(){
             $("div#loginSucces").fadeOut();
          },2000)
 
-         if(level ==='1')
-         {
-             localStorage.setItem("Token",data.Token);
-             window.location.replace("Farmer/profile.html");
-         }
-         else if(level ==='2'){
-             localStorage.setItem("Token",data.Token);
-             window.location.replace("client/profile.html");             
-         }
+                window.location.replace("/Ungukamuhinzi/login");
             }
             ,
             complete:function(){

@@ -107,8 +107,10 @@
                             <!-- <div class="col-md-8 mx-auto"> -->
                             <div class="myform form donat-login ">
                                 <form class="formValidate" id="contactForm" action="#" method="post" name="login"    e.preventDefault();>
+                                    {{ csrf_field() }}
                                     <div class="form-group">
-                                        <input type="number"  name="phone" id="phone11"  class="form-control my-input" maxlength="10" minlength="10" placeholder="Phone number" required>
+                                        <input type="hidden" value="{{ Session::token() }}" id="token">
+                                        <input type="text"  name="phone" id="phone11"  class="form-control my-input"  placeholder="Phone number" required>
                                     </div>
                                     <div class="form-group">
                                         <input type="password"  id="repeatpassword110" name="password"  class="form-control my-input" minlength="6"  placeholder="password" required>
