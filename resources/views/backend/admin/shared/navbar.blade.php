@@ -66,7 +66,7 @@
                         @if(empty($photo))
                             <img src="{{ asset('backend/assets/users/default.jpg')}}" alt="user" class="rounded-circle" width="31">
                         @else
-                            <img src="{{ asset('backend/assets/users/profiles/'.$photo)}}" alt="user" class="rounded-circle" width="31">
+                            <img src="{{ asset('/backend/assets/users/profiles/'.$photo)}}" alt="user" class="rounded-circle" width="31">
 
                         @endif
                         <span class="ml-2 user-text font-medium">{{ Auth::user()->fullname }}</span><span class="fas fa-angle-down ml-2 user-text"></span>
