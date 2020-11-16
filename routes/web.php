@@ -37,6 +37,7 @@ Route::post('/Ungukamuhinzi/register/user',
 Route::post('/Ungukamuhinzi/login/user',
     [App\Http\Controllers\admin\AdminController::class, 'loginUser'
     ])->name('frontend.loginUser');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
