@@ -6,8 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Expense extends Model
 {
-    use HasMediaTrait;
-    protected $fillable=[
-        'fname','lname','phone','identity','photo',
-    ];
+    protected $fillable=['farm_id','description','moneySpent'];
 }

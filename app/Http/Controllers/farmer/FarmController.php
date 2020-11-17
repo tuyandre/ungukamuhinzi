@@ -31,8 +31,8 @@ class FarmController extends Controller
             $farmcrops=DB::table('cropfarms')
                 ->leftjoin('farms','farms.id','=','cropfarms.id')
                 ->leftjoin('crops','crops.id','=','cropfarms.cropsID')
-                ->select('farms.id as farmID','cropfarms.id as cropfarmID','crops.photo','crops.crops as cropname','farms.status','farms.UPI','farms.location','farms.user_id','farms.plotsize','farms.created_at','farms.updated_at')
-                ->where('farmID',$farmid)->where('cropfarms.status','=','1')
+                ->select('farms.id as farm_id','cropfarms.id as cropfarmID','crops.photo','crops.crops as cropname','farms.status','farms.UPI','farms.location','farms.user_id','farms.plotsize','farms.created_at','farms.updated_at')
+                ->where('farm_id',$farmid)->where('cropfarms.status','=','1')
                 ->get();
             foreach($farmcrops as $frmcrop){
                 $farmcrop['cropfarmID']=$frmcrop->cropfarmID;
@@ -104,12 +104,12 @@ class FarmController extends Controller
             $farmid = $farms->id;
             $farmcrop =array();
             $frm =array();
-            //$farmcrops = Cropfarm::where('farmID',$farmid)->get();
+            //$farmcrops = Cropfarm::where('farm_id',$farmid)->get();
             $farmcrops=DB::table('cropfarms')
-                ->leftjoin('farms','farms.id','=','cropfarms.farmID')
+                ->leftjoin('farms','farms.id','=','cropfarms.farm_id')
                 ->leftjoin('seasons','seasons.id','=','cropfarms.seasonID')
-                ->leftjoin('crops','crops.id','=','cropfarms.cropsID')
-                ->select('farms.id as farmID','cropfarms.id as cropfarmID','seasons.seasonLenght','crops.photo','crops.crops as cropname','farms.status','farms.UPI','farms.location','farms.user_id','farms.plotsize','farms.created_at','farms.updated_at')
+                ->leftjoin('crops','crops.id','=','cropfarms.crop_id')
+                ->select('farms.id as farm_id','cropfarms.id as cropfarmID','seasons.seasonLenght','crops.photo','crops.crops as cropname','farms.status','farms.UPI','farms.location','farms.user_id','farms.plotsize','farms.created_at','farms.updated_at')
                 ->where('farmID',$farmid)->where('cropfarms.status','=','1')
                 ->get();
             foreach($farmcrops as $frmcrop){
@@ -120,7 +120,7 @@ class FarmController extends Controller
 
                 //return $farmcrops;
             }
-            $frm['farmID']=$farms->id;
+            $frm['farm_id']=$farms->id;
             $frm['UPI']=$farms->UPI;
             $frm['location'] = $farms->location;
             $frm['plotsize']=$farms->plotsize;
