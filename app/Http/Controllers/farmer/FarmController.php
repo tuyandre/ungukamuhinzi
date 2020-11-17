@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers\farmer;
 
+use App\Crop;
+use App\Farm;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use JWTAuth;
 class FarmController extends Controller
 {
     protected $user;
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+    }
     public function index()
     {
         $result = array();
@@ -160,7 +168,7 @@ class FarmController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
         $id = $request->get('cropid');
-        $validfarmer = Crops::where('id','=',$id)->count();
+        $validfarmer = Crop::where('id','=',$id)->count();
         if ($validfarmer == 0) {
             $retunerror = array('Message'=>'this crops is currently unvailable','status'=>400);
             return response()->json($retunerror);
@@ -168,7 +176,7 @@ class FarmController extends Controller
         else{
 
             $imageurls = array();
-            $existedrecords =Crops::where('id','=',$request->get('cropid'))->get();
+            $existedrecords =Crop::where('id','=',$request->get('cropid'))->get();
 
             if($request->hasFile('photo')){
                 $image = $request->file('photo');
@@ -187,7 +195,7 @@ class FarmController extends Controller
                 $image_url = implode("",$imageurls);
             }
 
-            $crops =crops::find($id);
+            $crops =crop::find($id);
             if (!$crops) {
                 return response()->json([
 

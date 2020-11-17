@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers\client;
 
+use App\Customer;
 use App\Http\Controllers\Controller;
+use App\Order;
+use App\Stock;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use JWTAuth;
 class CustomerController extends Controller
 {
     protected $user;
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+    }
     public function index()
     {
         $farmers= $this->user

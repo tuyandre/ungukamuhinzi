@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers\farmer;
 
+use App\Farm;
 use App\Http\Controllers\Controller;
+use App\Stock;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use JWTAuth;
 class StockController extends Controller
 {
     protected $user;
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+    }
     public function index()
     {
         $result=array();

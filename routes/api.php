@@ -23,7 +23,11 @@ Route::post('/ungukamuhinzi/login/user',
 
 
 
-
+Route::post('login', 'UserController@login');
+Route::post('registration', 'UserController@register');
+Route::post('sendCode','UserController@sendCode');
+Route::post('viewCrops','UserController@viewCrops');
+Route::post('Season','FarmerController@seasons');
 
 Route::post('logout', 'UserController@logout');
 Route::post('complete', 'farmer\FarmerController@store');
@@ -61,7 +65,23 @@ Route::post('insideCrop','farmer\FarmController@farmsUsed');
 Route::post('insideProfile','farmer\FarmController@insideProfile');
 
 
-
+Route::post('DetailCustomer','client\CustomerController@index');
+Route::post('CustomerProfile','client\CustomerController@store');
+Route::post('UpdateCustomer','client\CustomerController@update');
+Route::post('ViewHarvest','client\CustomerController@ViewHarvest');
+Route::post('makeOrder','client\CustomerController@makeOrder');
+Route::post('pending','client\CustomerController@myOrder');
+Route::post('CustomerChangePassword','client\CustomerController@changePassword');
+Route::post('delivered','client\CustomerController@delivered');
+Route::post('reorder','client\CustomerController@reorder');
+Route::post('processed','client\CustomerController@process');
+Route::post('cancelled','client\CustomerController@cancelled');
+Route::post('cancel','client\CustomerController@cancel');
+Route::post('logout', 'UserController@logout');
+Route::post('changePhone2','client\FarmerController@changePhone');
+Route::post('allOrdered','client\CustomerController@allOrdered');
+Route::post('display','client\CustomerController@fillQuantity');
+Route::post('supplier','client\CustomerController@supplier');
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

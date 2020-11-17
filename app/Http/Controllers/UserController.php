@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+//use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
+
 class UserController extends Controller
 {
+    public $loginAfterSignUp = true;
     public function registerUser(Request $request){
         $validator = Validator::make($request->all(), [
             'fullname' => 'required',

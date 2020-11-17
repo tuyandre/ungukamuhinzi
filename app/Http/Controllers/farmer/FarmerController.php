@@ -2,11 +2,24 @@
 
 namespace App\Http\Controllers\farmer;
 
+use App\Farmer;
 use App\Http\Controllers\Controller;
+use App\Order;
+use App\Season;
+use App\Stock;
 use Illuminate\Http\Request;
-
+//use Tymon\JWTAuth\JWTAuth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use JWTAuth;
 class FarmerController extends Controller
 {
+    protected $user;
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+    }
     public function store(Request $request)
     {
         $user=$this->user = JWTAuth::parseToken()->authenticate();
