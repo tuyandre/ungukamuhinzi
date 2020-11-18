@@ -24,7 +24,7 @@ Route::post('/ungukamuhinzi/login/user',
 
 
 Route::post('login', 'UserController@login');
-Route::post('registration', 'UserController@register');
+Route::post('registration', 'UserController@registerUser');
 Route::post('sendCode','UserController@sendCode');
 Route::post('viewCrops','UserController@viewCrops');
 Route::post('Season','FarmerController@seasons');
