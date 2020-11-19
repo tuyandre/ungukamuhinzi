@@ -78,9 +78,9 @@ class FarmerController extends Controller
         }
         //
     }
-    public function show()
+    public function show(Request $request)
     {
-        $user=$this->user = JWTAuth::parseToken()->authenticate();
+        $user=$this->user = JWTAuth::toUser($request->token);
         $userid=$user->id;
         $farmers= $this->user
             ->farmers()

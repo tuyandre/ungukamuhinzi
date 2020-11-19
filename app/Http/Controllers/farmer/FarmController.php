@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use JWTAuth;
+//use JWTAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 class FarmController extends Controller
 {
     protected $user;
@@ -16,10 +18,11 @@ class FarmController extends Controller
     {
         $this->user = JWTAuth::parseToken()->authenticate();
     }
-    public function index()
+    public function index(Request $request)
     {
         $result = array();
-        $user=$this->user = JWTAuth::parseToken()->authenticate();
+//        $user=$this->user = JWTAuth::parseToken()->authenticate();
+        $user=$this->user = JWTAuth::toUser($request->token);
         $userid=$user->id;
         $farm = Farm::where('user_id',$userid)->get();
 
@@ -30,8 +33,8 @@ class FarmController extends Controller
             //$farmcrops = Cropfarm::where('farmID',$farmid)->get();
             $farmcrops=DB::table('cropfarms')
                 ->leftjoin('farms','farms.id','=','cropfarms.id')
-                ->leftjoin('crops','crops.id','=','cropfarms.cropsID')
-                ->select('farms.id as farm_id','cropfarms.id as cropfarmID','crops.photo','crops.crops as cropname','farms.status','farms.UPI','farms.location','farms.user_id','farms.plotsize','farms.created_at','farms.updated_at')
+                ->leftjoin('crops','crops.id','=','cropfarms.crop_id')
+                ->select('farms.id as farm_id','cropfarms.id as cropfarm_id','crops.photo','crops.crops as cropname','farms.status','farms.UPI','farms.location','farms.user_id','farms.plotsize','farms.created_at','farms.updated_at')
                 ->where('farm_id',$farmid)->where('cropfarms.status','=','1')
                 ->get();
             foreach($farmcrops as $frmcrop){
@@ -59,11 +62,11 @@ class FarmController extends Controller
     }
     public function store(Request $request)
     {
-        $user=$this->user = JWTAuth::parseToken()->authenticate();
-        $userid=$user->id;
+
         $validator=Validator::make($request->all(), [
             'UPI' => 'unique:farms',
             'location' => 'required',
+            'token' => 'required',
             'plotsize'=>'required',
         ]);
         if ($validator->fails()) {
@@ -74,22 +77,27 @@ class FarmController extends Controller
             ];
             return response()->json($response, 400);
         }
-        $farmers= DB::table('farmers')->select('user_id')->where('user_id','=',$userid)->get()->count();
-        if($farmers>0){
-            $farms = new Farm();
-            $farms->UPI = $request->UPI;
-            $farms->location = $request->location;
-            $farms->plotsize=$request->plotsize;
-            if ($this->user->farms()->save($farms))
-                return response()->json(['Message' =>'Farm Registered','farm' => $farms],200);
-            else
-                return response()->json([
-                    'Message' => 'Sorry, new farm not added',
-                    'Status'=>400,
-                ], 400);
-        }
-        else{
-            return response()->json(['Message' =>'Before you register your farms complete your profile','Status' => 200],200);
+        $user=$this->user = JWTAuth::toUser($request->token);
+        if ($user) {
+            $userid = $user->id;
+            $farmers = DB::table('farmers')->select('user_id')->where('user_id', '=', $userid)->get()->count();
+            if ($farmers > 0) {
+                $farms = new Farm();
+                $farms->UPI = $request->UPI;
+                $farms->location = $request->location;
+                $farms->plotsize = $request->plotsize;
+                if ($this->user->farms()->save($farms))
+                    return response()->json(['Message' => 'Farm Registered', 'farm' => $farms], 200);
+                else
+                    return response()->json([
+                        'Message' => 'Sorry, new farm not added',
+                        'Status' => 400,
+                    ], 400);
+            } else {
+                return response()->json(['Message' => 'Before you register your farms complete your profile', 'Status' => 200], 200);
+            }
+        }else{
+            return response()->json(['Message' => 'Please login', 'Status' => 200], 200);
         }
         //
     }
@@ -107,13 +115,13 @@ class FarmController extends Controller
             //$farmcrops = Cropfarm::where('farm_id',$farmid)->get();
             $farmcrops=DB::table('cropfarms')
                 ->leftjoin('farms','farms.id','=','cropfarms.farm_id')
-                ->leftjoin('seasons','seasons.id','=','cropfarms.seasonID')
+                ->leftjoin('seasons','seasons.id','=','cropfarms.season_id')
                 ->leftjoin('crops','crops.id','=','cropfarms.crop_id')
-                ->select('farms.id as farm_id','cropfarms.id as cropfarmID','seasons.seasonLenght','crops.photo','crops.crops as cropname','farms.status','farms.UPI','farms.location','farms.user_id','farms.plotsize','farms.created_at','farms.updated_at')
-                ->where('farmID',$farmid)->where('cropfarms.status','=','1')
+                ->select('farms.id as farm_id','cropfarms.id as cropfarm_id','seasons.seasonLenght','crops.photo','crops.crops as cropname','farms.status','farms.UPI','farms.location','farms.user_id','farms.plotsize','farms.created_at','farms.updated_at')
+                ->where('farm_id',$farmid)->where('cropfarms.status','=','1')
                 ->get();
             foreach($farmcrops as $frmcrop){
-                $farmcrop['cropfarmID']=$frmcrop->cropfarmID;
+                $farmcrop['cropfarmID']=$frmcrop->cropfarm_id;
                 $farmcrop['cropimage'] = $frmcrop->photo;
                 $farmcrop['cropname'] = $frmcrop->cropname;
                 $farmcrop['seasons']=$frmcrop->seasonLenght;
@@ -139,11 +147,11 @@ class FarmController extends Controller
     }
     public function update(Request $request)
     {
-        $id=$this->user = JWTAuth::parseToken()->authenticate();
+        $id=$this->user = JWTAuth::toUser($request->token);
         $userid=$id->id;
         $farmid=new Farm();
         $id=$request->farmid;
-        $farms = $this->user->farms()->find($id);
+//        $farms = $this->user->farms()->find($id);
         $farms = $this->user->farms()->find($id);
         if (!$farms) {
             return response()->json([
@@ -214,26 +222,27 @@ class FarmController extends Controller
     public function farmsUsed(Request $request){
         $result=array();
         $both=array();
+
+        $exp=array();
         $id=$request->cropid;
         $farms=$this->user
             ->farms()
-            ->join('cropfarms','cropfarms.farmID','=','farms.id')
-            ->join('crops','cropfarms.cropsID','=','crops.id')
-            ->join('expenses','expenses.farmID','=','farms.id')
-            ->join('stocks','stocks.cropfarmID','=','cropfarms.id')
-            ->join('orders','stocks.id','=','orders.stockID')
+            ->join('cropfarms','cropfarms.farm_id','=','farms.id')
+            ->join('crops','cropfarms.crop_id','=','crops.id')
+            ->join('expenses','expenses.farm_id','=','farms.id')
+            ->join('stocks','stocks.cropfarm_id','=','cropfarms.id')
+            ->join('orders','stocks.id','=','orders.stock_id')
             ->select('farms.UPI','stocks.quantity','orders.quantity as quantity2',DB::raw('SUM(expenses.moneySpent) as moneySpent'))
             ->where('crops.id','=',$id)
             ->groupBy('farms.UPI','stocks.quantity','orders.quantity')
             ->get();
         foreach($farms as $value){
-            $exp=array();
             $exp=$this->user
                 ->farms()
-                ->join('cropfarms','cropfarms.farmID','=','farms.id')
-                ->join('crops','cropfarms.cropsID','=','crops.id')
-                ->join('expenses','expenses.farmID','=','farms.id')
-                ->join('stocks','stocks.cropfarmID','=','cropfarms.id')
+                ->join('cropfarms','cropfarms.farm_id','=','farms.id')
+                ->join('crops','cropfarms.crop_id','=','crops.id')
+                ->join('expenses','expenses.farm_id','=','farms.id')
+                ->join('stocks','stocks.cropfarm_id','=','cropfarms.id')
                 ->select(DB::raw('SUM(expenses.moneySpent) as moneySpent'))
                 ->get();
             foreach($exp as $expenses){
@@ -241,9 +250,9 @@ class FarmController extends Controller
             }
             $hav=$this->user
                 ->stocks()
-                ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-                ->join('crops','crops.id','=','cropfarms.cropsID')
-                ->join('orders','orders.stockID','=','stocks.id')
+                ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+                ->join('crops','crops.id','=','cropfarms.crop_id')
+                ->join('orders','orders.stock_id','=','stocks.id')
                 ->select(DB::raw('SUM(stocks.quantity+orders.quantity) as quantity,SUM(orders.quantity) as sold_unity,SUM(orders.quantity*stocks.price) as sales'))
                 ->get();
             foreach($hav as $harvest){
@@ -257,12 +266,15 @@ class FarmController extends Controller
 
             $result[]=$farm;
         }
-        $both['farms']=$result;
-        $both['Total_expenses']=$expenses->moneySpent;
-        $both['haverst_quantity_kg']=$harvest->quantity;
-        $both['Sold_unity_kg']=$harvest->sold_unity;
-        $both['Soles_money']=$harvest->sales;
-        $both['profit']=$harvest->sales-$expenses->moneySpent;
+        if (!empty($exp)){
+            $both['farms']=$result;
+            $both['Total_expenses']=$exp['wholeExpenses'];
+            $both['haverst_quantity_kg']=$harvest->quantity;
+            $both['Sold_unity_kg']=$harvest->sold_unity;
+            $both['Soles_money']=$harvest->sales;
+            $both['profit']=$harvest->sales-$exp['wholeExpenses'];
+        }
+
         $count=$farms->count();
         if($count>0){
             return response()->json(['Message'=>'Success','Data'=>$both,'Returned_Data'=>$count,'Status'=>200]);
@@ -274,11 +286,11 @@ class FarmController extends Controller
         $result=array();
         $farms=$this->user
             ->farms()
-            ->join('cropfarms','cropfarms.farmID','=','farms.id')
-            ->join('crops','cropfarms.cropsID','=','crops.id')
-            ->join('expenses','expenses.cropfarmID','=','cropfarms.id')
-            ->join('stocks','stocks.cropfarmID','=','cropfarms.id')
-            ->join('orders','orders.stockID','=','stocks.id')
+            ->join('cropfarms','cropfarms.farm_id','=','farms.id')
+            ->join('crops','cropfarms.crop_id','=','crops.id')
+            ->join('expenses','expenses.cropfarm_id','=','cropfarms.id')
+            ->join('stocks','stocks.cropfarm_id','=','cropfarms.id')
+            ->join('orders','orders.stock_id','=','stocks.id')
             ->select('crops.id as cropid','crops.crops',DB::raw('SUM(expenses.moneySpent) as expenses, SUM(stocks.price*orders.quantity) as sales,SUM(stocks.price*orders.quantity)-SUM(expenses.moneySpent) as profit'))
             ->groupBy('crops.id','crops.crops')
             ->get();

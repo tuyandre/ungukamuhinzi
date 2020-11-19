@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Nexmo\Laravel\NexmoServiceProvider::class,
+        JD\Cloudder\CloudderServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -229,6 +230,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Nexmo' => Nexmo\Laravel\Facade\Nexmo::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
 
     ],
 

@@ -10,7 +10,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use JD\Cloudder\Facades\Cloudder;
 use JWTAuth;
+//use Tymon\JWTAuth\Facades\JWTAuth;
+
 class CustomerController extends Controller
 {
     protected $user;
@@ -51,7 +54,7 @@ class CustomerController extends Controller
             ];
             return response()->json($response, 404);
         }
-        $user=$this->user = JWTAuth::parseToken()->authenticate();
+        $user=$this->user = JWTAuth::toUser($request->token);
         $userid=$user->id;
 
         $image = $request->file('photo');
@@ -93,13 +96,13 @@ class CustomerController extends Controller
     }
     public function ViewHarvest(){
         $harvest=DB::table('stocks')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('seasons','cropfarms.seasonID','=','seasons.id')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('seasons','cropfarms.season_id','=','seasons.id')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
             ->join('users','stocks.user_id','=','users.id')
             ->join('farmers','farmers.user_id','=','users.id')
-            ->join('farms','farms.id','=','cropfarms.farmID')
-            ->select('stocks.id as stockID','crops.photo','crops.crops','stocks.quantity as quantity_of_harvest','farmers.fname','farmers.lname','farms.location','stocks.price as price_per_kg')
+            ->join('farms','farms.id','=','cropfarms.farm_id')
+            ->select('stocks.id as stock_id','crops.photo','crops.crops','stocks.quantity as quantity_of_harvest','farmers.fname','farmers.lname','farms.location','stocks.price as price_per_kg')
             ->where('stocks.status','=',1)
             ->where('quantity','>',0)
             ->orderBy('stocks.id','DESC')
@@ -125,7 +128,7 @@ class CustomerController extends Controller
             return response()->json($response, 404);
         }
         $id=new stock();
-        $id=$request->stockID;
+        $id=$request->stock_id;
         $customers2= $this->user
             ->customers()
             ->get(['id'])->count();
@@ -138,7 +141,7 @@ class CustomerController extends Controller
             if($qntnt >= $order2->quantity = $request->quantity){
                 DB::table('stocks')->where('id',$id)->decrement('quantity', $order2->quantity = $request->quantity);
                 $order = new order();
-                $order->stockID = $request->stockID;
+                $order->stock_id = $request->stock_id;
                 $order->quantity = $request->quantity;
                 $order->status = $request->status;
                 if ($this->user->customers()->save($order))
@@ -212,12 +215,12 @@ class CustomerController extends Controller
         $myorder= $this->user
             ->orders()
             ->join('users','orders.user_id','=','users.id')
-            ->join('stocks','stocks.id','=','orders.stockID')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
-            ->join('farms','cropfarms.farmID','=','farms.id')
+            ->join('stocks','stocks.id','=','orders.stock_id')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
+            ->join('farms','cropfarms.farm_id','=','farms.id')
             ->join('farmers','farmers.user_id','farms.user_id')
-            ->select('stocks.id as stockID','orders.id as orderID','crops.photo','crops.crops','farms.location','orders.quantity','orders.status as orderStatus','stocks.price as frw_per_kg',DB::raw('stocks.price*orders.quantity as Money_you_have_to_pay'),'farmers.fname','farmers.lname','farmers.phone','orders.created_at')
+            ->select('stocks.id as stock_id','orders.id as order_id','crops.photo','crops.crops','farms.location','orders.quantity','orders.status as orderStatus','stocks.price as frw_per_kg',DB::raw('stocks.price*orders.quantity as Money_you_have_to_pay'),'farmers.fname','farmers.lname','farmers.phone','orders.created_at')
             ->where('orders.status','=','1')
             ->get();
         $count=$myorder->count();
@@ -265,12 +268,12 @@ class CustomerController extends Controller
         $myorder= $this->user
             ->orders()
             ->join('users','orders.user_id','=','users.id')
-            ->join('stocks','stocks.id','=','orders.stockID')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
-            ->join('farms','cropfarms.farmID','=','farms.id')
+            ->join('stocks','stocks.id','=','orders.stock_id')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
+            ->join('farms','cropfarms.farm_id','=','farms.id')
             ->join('farmers','farmers.user_id','farms.user_id')
-            ->select('stocks.id as stockID','orders.id as orderID','crops.photo','crops.crops','farms.location','orders.quantity','orders.status','stocks.price as frw_per_kg',DB::raw('stocks.price*orders.quantity as Money_you_supposed_to_be_paid'),'farmers.fname','farmers.phone','orders.updated_at')
+            ->select('stocks.id as stock_id','orders.id as orderID','crops.photo','crops.crops','farms.location','orders.quantity','orders.status','stocks.price as frw_per_kg',DB::raw('stocks.price*orders.quantity as Money_you_supposed_to_be_paid'),'farmers.fname','farmers.phone','orders.updated_at')
             ->where('orders.status','=','3')
             ->get();
         $count=$myorder->count();
@@ -284,12 +287,12 @@ class CustomerController extends Controller
         $myorder= $this->user
             ->orders()
             ->join('users','orders.user_id','=','users.id')
-            ->join('stocks','stocks.id','=','orders.stockID')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
-            ->join('farms','cropfarms.farmID','=','farms.id')
+            ->join('stocks','stocks.id','=','orders.stock_id')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
+            ->join('farms','cropfarms.farm_id','=','farms.id')
             ->join('farmers','farmers.user_id','farms.user_id')
-            ->select('stocks.id as stockID','orders.id as orderID','crops.photo','crops.crops','farms.location','orders.quantity','orders.status','stocks.price as frw_per_kg',DB::raw('stocks.price*orders.quantity as Money_you_supposed_to_be_paid'),'farmers.fname','farmers.lname','farmers.phone','orders.updated_at')
+            ->select('stocks.id as stock_id','orders.id as order_id','crops.photo','crops.crops','farms.location','orders.quantity','orders.status','stocks.price as frw_per_kg',DB::raw('stocks.price*orders.quantity as Money_you_supposed_to_be_paid'),'farmers.fname','farmers.lname','farmers.phone','orders.updated_at')
             ->where('orders.status','=','0')
             ->get();
         $count=$myorder->count();
@@ -301,8 +304,8 @@ class CustomerController extends Controller
     }
     public function reorder(Request $request){
         $id=new order();
-        $id=$request->orderid;
-        $id2=$request->stocid;
+        $id=$request->order_id;
+        $id2=$request->stock_id;
         $select=DB::table('orders')->select('quantity')->where('orders.id','=',$id)
             ->get();
         foreach($select as $selc){
@@ -357,13 +360,13 @@ class CustomerController extends Controller
     public function process(){
         $myorder=$this->user
             ->orders()
-            ->join('stocks','stocks.id','=','orders.stockID')
+            ->join('stocks','stocks.id','=','orders.stock_id')
             ->join('users','users.id','=','orders.user_id')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
-            ->join('farms','farms.id','=','cropfarms.farmID')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
+            ->join('farms','farms.id','=','cropfarms.farm_id')
             ->join('farmers','farmers.user_id','=','farms.user_id')
-            ->select('orders.id','crops.photo','stocks.id as StocksID','crops.crops','farms.location','orders.quantity','orders.status','farmers.fname as farmer_name','farmers.phone as contact_for_farmers','stocks.price as frw_per_kg',DB::raw('stocks.price*orders.quantity as Money_you_have_to_pay'))
+            ->select('orders.id','crops.photo','stocks.id as Stock_id','crops.crops','farms.location','orders.quantity','orders.status','farmers.fname as farmer_name','farmers.phone as contact_for_farmers','stocks.price as frw_per_kg',DB::raw('stocks.price*orders.quantity as Money_you_have_to_pay'))
             ->where('orders.status','=','2')
             ->get();
         $count=$myorder->count();
@@ -377,9 +380,9 @@ class CustomerController extends Controller
         $total=$this->totalAmount();
         $user=$this->user
             ->orders()
-            ->join('stocks','stocks.id','=','orders.stockID')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
+            ->join('stocks','stocks.id','=','orders.stock_id')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
             ->select('crops.id as cropid','orders.user_id','stocks.price','crops.crops','crops.photo',DB::raw('(stocks.price)*SUM(orders.quantity) as Amount_Spent,SUM(orders.quantity) as quantity'))
             ->groupBy('crops.id','orders.user_id','stocks.price','crops.photo','crops.crops','stocks.price')
             ->where('orders.status','=','3') ->groupby('orders.user_id')->groupby('crops.crops')
@@ -395,9 +398,9 @@ class CustomerController extends Controller
     public function totalAmount(){
         $user=$this->user
             ->orders()
-            ->join('stocks','stocks.id','=','orders.stockID')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
+            ->join('stocks','stocks.id','=','orders.stock_id')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
             ->select(DB::raw('SUM(stocks.price*orders.quantity) as Amount_Spent'),DB::raw('SUM(orders.quantity) as all_quantity'),DB::raw('COUNT(distinct(crops.crops)) as crops'))
             ->where('orders.status','=','3')
             ->get();
@@ -409,12 +412,12 @@ class CustomerController extends Controller
         }
     }
     public function fillQuantity(Request $request){
-        $id=$request->stockID;
+        $id=$request->stock_id;
         $data=DB::table('stocks')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('farms','farms.id','=','cropfarms.farmID')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('farms','farms.id','=','cropfarms.farm_id')
             ->join('farmers','farmers.user_id','stocks.user_id')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
             ->select('stocks.id','farms.location','farmers.fname','farmers.lname','crops.photo','crops.crops','stocks.price')
             ->where('stocks.id','=',$id)
             ->get();
@@ -426,14 +429,14 @@ class CustomerController extends Controller
         }
     }
     public function supplier(Request $request){
-        $id=$request->cropid;
+        $id=$request->crop_id;
         $supplier=$this->user
             ->orders()
-            ->join('stocks','stocks.id','=','orders.stockID')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('farms','farms.id','=','cropfarms.farmID')
+            ->join('stocks','stocks.id','=','orders.stock_id')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('farms','farms.id','=','cropfarms.farm_id')
             ->join('users','users.id','=','stocks.user_id')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
             ->join('farmers','farmers.user_id','=','users.id')
             ->select('crops.crops','farmers.fname','farmers.lname',DB::raw('(stocks.price)*SUM(orders.quantity) as Amount_Spent,SUM(orders.quantity) as quantity'),'orders.updated_at')
             ->groupBy('crops.crops','farmers.fname','farmers.lname','stocks.price','orders.quantity','orders.updated_at')
@@ -453,11 +456,11 @@ class CustomerController extends Controller
         $id=$request->cropid;
         $supplier=$this->user
             ->orders()
-            ->join('stocks','stocks.id','=','orders.stockID')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('farms','farms.id','=','cropfarms.farmID')
+            ->join('stocks','stocks.id','=','orders.stock_id')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('farms','farms.id','=','cropfarms.farm_id')
             ->join('users','users.id','=','stocks.user_id')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
             ->join('farmers','farmers.user_id','=','users.id')
             ->select(DB::raw('(stocks.price)*SUM(orders.quantity) as Amount_Spent,SUM(orders.quantity) as quantity'),'orders.updated_at')
             ->groupBy('stocks.price','orders.quantity','orders.updated_at')

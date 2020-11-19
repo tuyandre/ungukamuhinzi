@@ -25,7 +25,11 @@ $app = new Illuminate\Foundation\Application(
 | incoming requests to this application from both the web and CLI.
 |
 */
+// Uncomment this line
+$app->register(App\Providers\AuthServiceProvider::class);
 
+// Add this line
+//$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
     App\Http\Kernel::class

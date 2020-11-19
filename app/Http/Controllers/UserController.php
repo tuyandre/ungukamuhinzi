@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-//use JWTAuth;
+use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Facades\JWTAuth;
+//use Tymon\JWTAuth\Facades\JWTAuth;
 
 
 class UserController extends Controller
@@ -87,6 +88,7 @@ class UserController extends Controller
             $usr['message']='Success';
             $usr['id']=$us->id;
             $usr['fullname']=$us->fullname;
+            $usr['phone']=$us->phone;
             $usr['level']=$us->level;
             $usr['token']=$jwt_token;
 
@@ -113,21 +115,24 @@ class UserController extends Controller
             ];
             return response()->json($response, 400);
         }
-        try {
-            JWTAuth::invalidate($request->token);
-
+        $logout = Auth::logout(true);
+        if (is_null($logout)) {
             return response()->json([
 
                 'message' => 'User logged out successfully',
+                'state' => $logout,
                 'Status' => 200,
-            ],200);
-        } catch (JWTException $exception) {
+            ], 200);
+        } else {
             return response()->json([
 
                 'Message' => 'Sorry, the user cannot be logged out',
+                'state' => $logout,
                 'Status' => 400,
             ], 400);
         }
+
+
     }
 
     public function getAuthUser(Request $request)
@@ -153,18 +158,38 @@ class UserController extends Controller
         $send=$codes->phone=$request->phone;
         $usr=DB::table('users')->where('phone','=',$send)
             ->get();
-        if($usr->count()>0){
-            $code=rand(1111,9999);
-            $nexmo=app('Nexmo\Client');
-            $nexmo->message()->send([
-                'to'=>'25'.$send,
-                'from'=>"UNGUKA MUHINZI" ,
-                'text'=>'Verify code: '.$code,
-            ]);
-            $user=DB::table('users')->where('phone','=',$send)->update(array('code'=>$code));
-            return response()->json(['Message'=>'success','Data'=>$code,'Status'=>200],200);
-        }else{
-            return response()->json(['Message'=>'Error, This phone are not available','Status'=>400],400);
+        if($usr->count()>0) {
+            $code = rand(1111, 9999);
+            $data = array(
+                "from" => 'UngukaMuhinzi',
+                "to" => '250788866742',
+                "api_key" => "01ab836b",
+                "api_secret" => "ZD0NP5wNmUsRmDCy",
+                "text" => "Unguka Muhinzi Verification Code " . $code
+            ,);
+            $url = "https://rest.nexmo.com/sms/json";
+            $data = http_build_query($data);
+            $username = "01ab836b";
+            $password = "ZD0NP5wNmUsRmDCy";
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            $result = curl_exec($ch);
+            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            if ($result){
+                $user=DB::table('users')->where('phone','=',$send)->update(array('code'=>$code));
+                return response()->json(['Message'=>'success','Data'=>$code,'Status'=>200],200);
+            }else{
+                return response()->json(['result' => "not"], 200);
+            }
+
+
         }
     }
     public function viewCrops(){

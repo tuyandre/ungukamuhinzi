@@ -16,25 +16,26 @@ class StockController extends Controller
     {
         $this->user = JWTAuth::parseToken()->authenticate();
     }
-    public function index()
+    public function index( Request $request)
     {
         $result=array();
         $both = array();
-        $user=$this->user= JWTAuth::parseToken()->authenticate();
+
+        $worth=array();
+        $user=$this->user= JWTAuth::toUser($request->token);
         $id=$user->id;
         $stock=DB::table('stocks')
             ->join('users','stocks.user_id','=','users.id')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
             ->join('farms','farms.id','=','cropfarms.user_id')
-            ->join('seasons','seasons.id','=','cropfarms.seasonID')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
-            ->select('stocks.id as stockid','farms.id as farmid','crops.photo','stocks.cropfarmID','crops.crops','farms.UPI','seasons.seasonLenght','stocks.quantity','stocks.price as current_price','stocks.status','stocks.created_at','stocks.updated_at')
+            ->join('seasons','seasons.id','=','cropfarms.season_id')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
+            ->select('stocks.id as stockid','farms.id as farmid','crops.photo','stocks.cropfarm_id','crops.crops','farms.UPI','seasons.seasonLenght','stocks.quantity','stocks.price as current_price','stocks.status','stocks.created_at','stocks.updated_at')
             ->distinct('stocks.id')
             ->where('stocks.quantity','>',0)->where('stocks.user_id','=',$id)
             ->orderBy('stocks.created_at','DESC')
             ->get();
         foreach($stock as $value){
-            $worth=array();
             $unpu=array();
             $publish=array();
             $worth=DB::table('stocks')
@@ -62,9 +63,9 @@ class StockController extends Controller
                 $publish['published']=$published->published;
 
             }
-            $res['stockid']=$value->stockid;
-            $res['farmid']=$value->farmid;
-            $res['cropfarmID']=$value->cropfarmID;
+            $res['stock_id']=$value->stockid;
+            $res['farm_id']=$value->farm_id;
+            $res['cropfarm_id']=$value->cropfarm_id;
             $res['crops']=$value->crops;
             $res['photo'] = $value->photo;
             $res['UPI']=$value->UPI;
@@ -75,10 +76,12 @@ class StockController extends Controller
             $res['updated_at']=$value->updated_at;
             $result[]=$res;
         }
-        $both ["stock"]= $result;
-        $both["worth"] = $worth2->worth;
-        $both["unpublished"] = $unpublished->unpublished;
-        $both["published"] = $published->published;
+        if (!empty($worth)) {
+            $both ["stock"] = $result;
+            $both["worth"] = $worth['worth'];
+            $both["unpublished"] = $unpublished->unpublished;
+            $both["published"] = $published->published;
+        }
         $count=$stock->count();
         if($count>0){
             return response()->json(['Message'=>'Success','Data'=>$both,'Status'=>200,'Returned_data'=>$count]); //
@@ -104,18 +107,18 @@ class StockController extends Controller
             return response()->json($response, 404);
         }
         $id=new farm();
-        $id=$request->farmID;
-        $id2=$request->cropfarmID;
+        $id=$request->farm_id;
+        $id2=$request->cropfarm_id;
         $select=DB::table('farms')->where('farms.id','=',$id)->where('farms.status','=','0')->get();
         $count=$select->count();
         if($count>0){
             $farms=new farm();
             $farms=DB::table('farms')->where('id','=',$id)->update(array('status'=>'1'));
             $ex=new expense;
-            $ex=DB::table('expenses')->where('farmID','=',$id)->update(array('status'=>'0'));
+            $ex=DB::table('expenses')->where('farm_id','=',$id)->update(array('status'=>'0'));
             $ex=DB::table('cropfarms')->where('id','=',$id2)->update(array('status'=>'0'));
             $stock = new stock();
-            $stock->cropfarmID = $request->cropfarmID;
+            $stock->cropfarm_id = $request->cropfarm_id;
             $stock->quantity = $request->quantity;
             $stock->price = $request->price;
             $stock->status=$request->status;
@@ -131,15 +134,15 @@ class StockController extends Controller
     public function show(Request $request)
     {
         $stk=new stock();
-        $id=$request->stocid;
+        $id=$request->stock_id;
         $stock=$this->user
             ->stocks()
             ->join('users','stocks.user_id','=','users.id')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('farms','farms.id','=','cropfarms.farmID')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
-            ->join('seasons','seasons.id','=','cropfarms.seasonID')
-            ->select('stocks.id as stockid','stocks.cropfarmID','farms.id as farmid','crops.photo','crops.crops','farms.UPI','seasons.seasonLenght','stocks.quantity','stocks.price as current_price','stocks.status')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('farms','farms.id','=','cropfarms.farm_id')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
+            ->join('seasons','seasons.id','=','cropfarms.season_id')
+            ->select('stocks.id as stockid','stocks.cropfarm_id','farms.id as farmid','crops.photo','crops.crops','farms.UPI','seasons.seasonLenght','stocks.quantity','stocks.price as current_price','stocks.status')
             ->where('stocks.id','=',$id)
             ->get();
         $count=$stock->count();
@@ -155,15 +158,15 @@ class StockController extends Controller
     {
         $result=array();
         $both=array();
-        $user=$this->user= JWTAuth::parseToken()->authenticate();
+        $user=$this->user= JWTAuth::toUser($request->token);
         $id=$user->id;
         $stock=DB::table('stocks')
             ->join('users','stocks.user_id','=','users.id')
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('farms','farms.id','=','cropfarms.farmID')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
-            ->join('expenses','cropfarms.id','=','expenses.cropfarmID')
-            ->join('orders','orders.stockID','=','stocks.id')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('farms','farms.id','=','cropfarms.farm_id')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
+            ->join('expenses','cropfarms.id','=','expenses.cropfarm_id')
+            ->join('orders','orders.stock_id','=','stocks.id')
             ->select('crops.id as cropid','crops.photo','orders.quantity as quantities','stocks.price as prices','crops.crops as cropname',DB::raw('SUM(expenses.moneySpent) as total_expenses'),
                 DB::raw('SUM(orders.quantity*stocks.price) as Total_amount_of_harvest'),
                 DB::raw('SUM(orders.quantity*stocks.price) -SUM(expenses.moneySpent) As profit'))
@@ -176,10 +179,10 @@ class StockController extends Controller
             $exp=array();
             $sales=array();
             $exp=DB::table('expenses')
-                ->join('cropfarms','cropfarms.id','=','expenses.cropfarmID')
-                ->join('farms','farms.id','=','cropfarms.farmID')
-                ->join('stocks','stocks.cropfarmID','=','cropfarms.id')
-                ->join('orders','orders.stockID','=','stocks.id')
+                ->join('cropfarms','cropfarms.id','=','expenses.cropfarm_id')
+                ->join('farms','farms.id','=','cropfarms.farm_id')
+                ->join('stocks','stocks.cropfarm_id','=','cropfarms.id')
+                ->join('orders','orders.stock_id','=','stocks.id')
                 ->select(DB::raw('SUM(expenses.moneySpent) as total_expenses'))
                 ->where('expenses.user_id','=',$id)->where('expenses.status','=','0')
                 ->where('orders.status','=','3')
@@ -188,7 +191,7 @@ class StockController extends Controller
                 $exp=$expense->total_expenses;
             }
             $sales=DB::table('stocks')
-                ->join('orders','orders.stockID','=','stocks.id')
+                ->join('orders','orders.stock_id','=','stocks.id')
                 ->select(DB::raw('SUM(stocks.price*orders.quantity) as sales'))
                 ->where('orders.status','=','3')->where('stocks.user_id','=',$id)
                 ->get();
@@ -221,9 +224,9 @@ class StockController extends Controller
         $total=$this->totalBenefit();
         $stock=$this->user
             ->stocks()
-            ->join('cropfarms','stocks.cropfarmID','=','cropfarms.id')
-            ->join('farms','farms.id','=','cropfarms.farmID')
-            ->join('orders','orders.stockID','stocks.id')
+            ->join('cropfarms','stocks.cropfarm_id','=','cropfarms.id')
+            ->join('farms','farms.id','=','cropfarms.farm_id')
+            ->join('orders','orders.stock_id','stocks.id')
             ->select(DB::raw('SUM(stocks.price*orders.quantity) as Total_amount_of_harvest'))
             ->where('orders.status','=','3')
             ->get();
@@ -239,9 +242,9 @@ class StockController extends Controller
     public function TotalExpense(){
         $user=$this->user
             ->expenses()
-            ->join('farms','farms.id','=','expenses.farmID')
-            ->join('cropfarms','farms.id','=','cropfarms.farmID')
-            ->join('stocks','stocks.cropfarmID','=','cropfarms.id')
+            ->join('farms','farms.id','=','expenses.farm_id')
+            ->join('cropfarms','farms.id','=','cropfarms.farm_id')
+            ->join('stocks','stocks.cropfarm_id','=','cropfarms.id')
             ->select(DB::raw('SUM(expenses.moneySpent) as total_expenses'))
             ->get();
         $count=$user->count();
@@ -278,7 +281,7 @@ class StockController extends Controller
                 'message' => 'Sorry, stock with id ' . $id . ' cannot be found'
             ], 400);
         }
-        $stock->cropfarmID = $request->cropfarmID;
+        $stock->cropfarm_id = $request->cropfarm_id;
         $stock->quantity = $request->quantity;
         $stock->price=$request->price;
         $stock->status = $request->status;
@@ -301,9 +304,9 @@ class StockController extends Controller
     public function feeds(){
         $stock=$this->user
             ->stocks()
-            ->join('cropfarms','cropfarms.id','=','stocks.cropfarmID')
-            ->join('crops','crops.id','=','cropfarms.cropsID')
-            ->join('farms','farms.id','=','cropfarms.farmID')
+            ->join('cropfarms','cropfarms.id','=','stocks.cropfarm_id')
+            ->join('crops','crops.id','=','cropfarms.crop_id')
+            ->join('farms','farms.id','=','cropfarms.farm_id')
             ->select('crops.id as cropid','crops.crops as cropname','crops.photo')
             ->groupBy('crops.id','crops.crops','crops.photo')
             ->get();
