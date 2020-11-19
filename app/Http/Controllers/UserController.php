@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Farmer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,12 +43,49 @@ class UserController extends Controller
             'password'=>Hash::make($request->password),
             'level'=>$request->level
         ]);
-        return response()->json([
-            'Message'=>'Success',
-            'Data' => $user,
-            'Status' => 200
 
-        ], 200);
+        if ($request->level==1){
+            $farmers = new Farmer();
+            $farmers->fname = $user->fullname;
+//            $farmers->fname = explode(',',$user->fullname,0);
+            $farmers->lname = $user->fullname;
+//            $farmers->lname = explode(' ',$user->fullname,1);
+            $farmers->phone = $user->phone;
+            $farmers->identity=$request->identity;
+            $farmers->user_id=$user->id;
+            $farmers->save();
+            return response()->json([
+                'Message'=>'Success',
+                'other'=>'farmer',
+                'Data' => $user,
+                'Status' => 200
+
+            ], 200);
+        }elseif ($request->level==2){
+            $clients = new Farmer();
+            $clients->fname = $user->fullname;
+            $clients->lname =$user->fullname;
+            $clients->phone = $user->phone;
+            $clients->identity=$request->identity;
+            $clients->user_id=$user->id;
+            $clients->save();
+            return response()->json([
+                'Message'=>'Success',
+                'other'=>'client',
+                'Data' => $user,
+                'Status' => 200
+
+            ], 200);
+        }else{
+            return response()->json([
+                'Message'=>'Success',
+                'other'=>'none',
+                'Data' => $user,
+                'Status' => 200
+
+            ], 200);
+        }
+
     }
     public function login(Request $request)
     {
