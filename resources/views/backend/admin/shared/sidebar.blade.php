@@ -91,71 +91,24 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
                         <i class="fa fa-tasks"></i>
-                        <span class="hide-menu">Survey</span>
+                        <span class="hide-menu">Seasons</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                        <i class="fa fa-tasks"></i>
+                        <span class="hide-menu">Farms</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                        <i class="fa fa-tasks"></i>
+                        <span class="hide-menu">Orders</span>
                     </a>
                 </li>
 
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="fas fa-paper-plane"></i>
-                        <span class="hide-menu">Send Survey</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="fa fa-briefcase"></i>
-                        <span class="hide-menu">Projects Category</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="fa fa-briefcase"></i>
-                        <span class="hide-menu">Project Subcategory</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="ti-package mr-1 ml-1"></i>
-                        <span class="hide-menu">Projects</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="fa fa-th-list"></i>
-                        <span class="hide-menu">Project Files</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="ti-pencil-alt mr-1 ml-1"></i>
-                        <span class="hide-menu">New Message</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="ti-comment-alt mr-1 ml-1"></i>
-                        <span class="hide-menu">Sent Message</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="fa fa-book" aria-hidden="true"></i>
-                        <span class="hide-menu">Applications</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="far fa-comments"></i>
-                        <span class="hide-menu">Contact Us</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="fa fa-question"></i>
-                        <span class="hide-menu">Call Request</span>
-                    </a>
-                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->
