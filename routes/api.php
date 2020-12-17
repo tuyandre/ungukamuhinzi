@@ -23,7 +23,7 @@ Route::post('/ungukamuhinzi/register/user',
 
 Route::group(['prefix' => '/ungukamuhinzi/'], function () {
 
-    Route::post('login/user', 'UserController@login');
+    Route::post('login/user', 'UserController@loginUser');
     Route::post('registration', 'UserController@registerUser');
     Route::post('sendCode', 'UserController@sendCode');
     Route::post('viewCrops', 'UserController@viewCrops');
