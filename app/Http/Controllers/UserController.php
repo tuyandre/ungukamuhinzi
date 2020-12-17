@@ -91,7 +91,7 @@ class UserController extends Controller
     }
     public function loginUser(Request $request){
         $validator = Validator::make($request->all(), [
-            'email' => 'required',
+            'phone' => 'required',
             'password' => 'required',
 
         ]);
@@ -103,12 +103,27 @@ class UserController extends Controller
             ];
             return response()->json($response, 400);
         }
-        if(is_numeric($request->get('email'))){
-            if(Auth::attempt(['phone' => $request->email, 'password' => $request->password])){
+        $jwt_token = null;
+        $input = $request->only('phone', 'password');
+        if(is_numeric($request->get('phone'))){
+            if(Auth::attempt(['phone' => $request->phone, 'password' => $request->password])){
 
                 if(Auth::user()->status==1){
+                    try{
+                    if (!$jwt_token = JWTAuth::attempt($input)) {
+                        return response()->json([
+                            'Message' => 'Invalid Credential',
+                            'Status' => 401,
+                        ], 401);
+                    }
+                } catch (JWTException $e){
+                    return response()->json(['Error'=>'could_not_create_token','Status'=>400],400);
+
+                }
+
                     $user=Auth::user();
                     $user['message']="Sussecc";
+                    $user['token']=$jwt_token;
                     return response()->json($user);
                 }else{
                     Auth::logout();
@@ -123,11 +138,23 @@ class UserController extends Controller
                 ], 401);
             }
         }else{
-            if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            if(Auth::attempt(['email' => $request->phone, 'password' => $request->password])){
 
                 if(Auth::user()->status==1){
+                    try{
+                        if (!$jwt_token = JWTAuth::attempt($input)) {
+                            return response()->json([
+                                'Message' => 'Invalid Credential',
+                                'Status' => 401,
+                            ], 401);
+                        }
+                    } catch (JWTException $e){
+                        return response()->json(['Error'=>'could_not_create_token','Status'=>400],400);
+
+                    }
                     $user=Auth::user();
                     $user['message']="Sussecc";
+                    $user['token']=$jwt_token;
                     return response()->json($user);
                 }else{
                     Auth::logout();
