@@ -27,7 +27,7 @@ Route::post('login', 'UserController@login');
 Route::post('registration', 'UserController@registerUser');
 Route::post('sendCode','UserController@sendCode');
 Route::post('viewCrops','UserController@viewCrops');
-Route::post('Season','farmer\FarmerController@seasons');
+Route::post('season','farmer\FarmerController@seasons');
 
 Route::post('logout', 'UserController@logout');
 Route::post('complete', 'farmer\FarmerController@store');

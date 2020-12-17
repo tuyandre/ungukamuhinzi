@@ -113,6 +113,9 @@
                                         <input type="number" name="phone" class="form-control my-input" id="emailg111" placeholder="Phone number" required>
                                     </div>
                                     <div class="form-group">
+                                        <input type="number" name="identity" class="form-control my-input" id="identity" placeholder="Identity(National Id)" required>
+                                    </div>
+                                    <div class="form-group">
                                         <input type="password" name="password" id="password"  class="form-control my-input" placeholder="Password" required>
                                     </div>
                                     <div class="form-group">

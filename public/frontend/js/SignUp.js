@@ -12,6 +12,7 @@ $(document).ready(function(){
         var Phone = document.querySelector("input#emailg111").value;
         var Password =document.querySelector("input#password").value;
         var token = document.querySelector("input#token").value;
+        var identity = document.querySelector("input#identity").value;
         var repeatpassword = document.querySelector("input#password11").value;
         var level =document.querySelector("input#farmerid").value;
         if(fullName === "" || Phone=== "" || Password === "" || repeatpassword=== ""){
@@ -30,7 +31,8 @@ $(document).ready(function(){
             _token:token,
             password:Password,
             confirmPassword:repeatpassword ,
-            level:level
+            level:level,
+            identity:identity
         }
         $.ajax({
             url:endpoint,
