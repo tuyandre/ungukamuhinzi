@@ -87,7 +87,7 @@
                     <h4 class="modal-title" id="exampleModalLabel1">Edit Season</h4>
                     <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <form  class="form-horizontal"  action="#" id="editForm">
+                <form  class="form-horizontal"  action="{{route('admin.seasons.updateSeason')}}" id="editForm">
                     {{ csrf_field() }}
                     <div class="modal-body">
 
@@ -159,7 +159,9 @@
                         data: 'id',
                         render: function (data, type, row) {
 
-                            return  "<a  href='/Administration/member/detail/" + row.id + "' class='btn btn-info btn-sm btn-flat js-detail' data-id='" + data +
+                            return "<button  data-url='/Administration/Season/show/" + row.id + "' class='btn btn-secondary btn-sm btn-flat js-edit' data-id='" + data +
+                                "' > <i class='fa fa-edit'></i>Edit</button>" +
+                                "<a  href='/Administration/Season/detail/" + row.id + "' class='btn btn-info btn-sm btn-flat js-detail' data-id='" + data +
                                 "' > <i class='fa fa-eye'></i>View</a>" +
                                 "<button class='btn btn-danger btn-sm btn-flat js-delete ' data-id='" + data +
                                 "' data-url='/Administration/Season/delete/" + row.id + "'> <i class='fa fa-trash'></i>Delete</button>";
@@ -242,9 +244,106 @@
                 });
                 return false;
             });
+
+            //Edit and update
+            manageTable.on('click', '.js-edit', function () {
+                $('#editModal').modal('show');
+                var footer = $('.editFooter');
+                $('.modal-loading').show();
+                $('.edit-result').hide();
+                footer.hide();
+                var url = $(this).attr('data-url');
+                var id = $(this).attr('data-id');
+                // console.log(url);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+                        // modal loading
+                        $('.modal-loading').hide();
+                        // modal result
+                        $('.edit-result').show();
+                        // modal footer
+                        footer.show();
+                        // setting values returned
+                        $("#edit-name").val(response.seasons.seasonLenght);
+
+                        // add hidden id
+                        $('#id').val(response.seasons.id);
+                        // update - form
+                        $('#editForm').unbind('submit').bind('submit', function (e) {
+                            e.preventDefault();
+                            var form = $(this);
+                            form.parsley().validate();
+                            if (!form.parsley().isValid()) {
+                                return false;
+                            }
+                            // edit btn
+                            $('#editBtn').button('loading');
+
+                            $.ajax({
+                                url: form.attr('action'),
+                                type: 'PUT',
+                                data: form.serialize()
+                            }).done(function (response) {
+                                // submit btn
+                                $('#editBtn').button('reset');
+//                                form[0].reset();
+                                // reload the table
+                                table.destroy();
+                                myFunc();
+                                // remove the error text
+                                $(".text-danger").remove();
+                                // remove the form error
+                                $('#edit-messages').html('<div class="alert alert-success">' +
+                                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                    '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> Season  successfully updated. </div>');
+
+                                $(".alert-success").delay(500).show(10, function () {
+                                    $(this).delay(3000).hide(10, function () {
+                                        $(this).remove();
+                                    });
+                                }); // /.alert
+                            }).fail(function (response) {
+                                console.log(response);
+                                $('#editBtn').button('reset');
+                                var errors = "";
+                                errors+="<b>"+response.responseJSON.message+"</b>";
+                                var data=response.responseJSON.errors;
+
+                                $.each(data,function (i, value) {
+                                    console.log(value);
+                                    if (i=='name'){
+                                        $('#ename').html(value[0])
+                                    }
+                                    $.each(value,function (j, values) {
+                                        errors += '<p>' + values + '</p>';
+                                    });
+                                });
+                                $('#edit-messages').html('<div class="alert alert-danger flat">' +
+                                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                    '<strong><i class="glyphicon glyphicon-glyphicon-remove"></i></strong><b>oops:</b>'+errors+'</div>');
+
+                                $(".alert-success").delay(500).show(10, function () {
+                                    $(this).delay(3000).hide(10, function () {
+                                        $(this).remove();
+                                    });
+                                });
+                            });	 // /ajax
+
+                            return false;
+                        }); // /update - form
+
+                    } // /success
+                }); // ajax function
+            });
+
             manageTable.on('click', '.js-delete', function () {
                 var button = $(this);
-                bootbox.confirm("Are you sure you want to Delete this District?", function (result) {
+                bootbox.confirm("Are you sure you want to Delete this Season?", function (result) {
                     if (result) {
                         $.ajax({
                             url: button.attr('data-url'),

@@ -33,6 +33,20 @@ class SeasonController extends Controller
             return response()->json(['seasons' => $season], 200);
         }
     }
+    public function show($id){
+        $season=Season::find($id);
+        if ($season){
+            return response()->json(['seasons' => $season], 200);
+        }
+    }
+    public function updateSeason(Request $request){
+        $season=Season::find($request['id']);
+        if ($season){
+            $season->seasonLenght=$request['name'];
+            $season->save();
+            return response()->json(['season' => 'ok'], 200);
+        }
+    }
     public function store(Request $request){
 
         $season=new Season();

@@ -132,7 +132,14 @@ Route::group(['prefix' => '/Administration/'], function () {
         'uses' => 'admin\SeasonController@delete',
         'as' => 'admin.seasons.delete'
     ]);
-
+    Route::get('Season/show/{id}', [
+        'uses' => 'admin\SeasonController@show',
+        'as' => 'admin.seasons.showSeason'
+    ]);
+    Route::put('update/Season', [
+        'uses' => 'admin\SeasonController@updateSeason',
+        'as' => 'admin.seasons.updateSeason'
+    ]);
 
 
 //crops routes
@@ -146,7 +153,22 @@ Route::group(['prefix' => '/Administration/'], function () {
         'as' => 'admin.crops.allCrops'
     ]);
 
-
+    Route::post('Crops/store', [
+        'uses' => 'admin\CropController@store',
+        'as' => 'admin.crops.store'
+    ]);
+    Route::delete('Crops/delete/{id}', [
+        'uses' => 'admin\CropController@delete',
+        'as' => 'admin.crops.delete'
+    ]);
+    Route::get('Crops/show/{id}', [
+        'uses' => 'admin\CropController@show',
+        'as' => 'admin.crops.showCrop'
+    ]);
+    Route::put('update/Crops', [
+        'uses' => 'admin\CropController@updateCrop',
+        'as' => 'admin.crops.updateCrop'
+    ]);
 
 
 

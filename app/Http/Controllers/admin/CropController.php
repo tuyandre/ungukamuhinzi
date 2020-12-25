@@ -25,4 +25,34 @@ class CropController extends Controller
         $crop=Crop::all();
         return response()->json(['crops' => $crop], 200); //
     }
+    public function show($id){
+        $crop=Crop::find($id);
+        if ($crop){
+            return response()->json(['crops' => $crop], 200);
+        }
+    }
+    public function updateCrop(Request $request){
+        $crop=Crop::find($request['id']);
+        if ($crop){
+            $crop->crops=$request['name'];
+            $crop->save();
+            return response()->json(['crops' => 'ok'], 200);
+        }
+    }
+    public function store(Request $request){
+
+        $crop=new Crop();
+        $crop->crops=$request['name'];
+        $crop->status="active";
+        $crop->save();
+        return response()->json(['crop' => "ok"], 200); //
+
+    }
+    public function delete($id){
+        $crop=Crop::find($id);
+        if ($crop){
+            $crop->delete();
+            return response()->json(['crops' => 'ok'], 200);
+        }
+    }
 }
