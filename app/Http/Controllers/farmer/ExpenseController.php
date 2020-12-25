@@ -147,14 +147,14 @@ class ExpenseController extends Controller
         $select=DB::table('farms')->where('farms.id','=',$id)->where('farms.status','=','1')->get();
         $count=$select->count();
         if($count>0){
-            $id=DB::table('farms')->where('id','=',$id)->update(array('status'=>'0'));
-            $add = new Cropfarm();
+           $add = new Cropfarm();
             $add->crop_id = $request->crop_id;
             $add->farm_id=$request->farm_id;
             $add->season_id=$request->season_id;
-            if ($this->user->cropfarms()->save($add))
-                return response()->json(['Message' =>'New crops registered','Status' => 200],200);
-            else
+            if ($this->user->cropfarms()->save($add)) {
+                $id = DB::table('farms')->where('id', '=', $id)->update(array('status' => '0'));
+                return response()->json(['Message' => 'New crops registered', 'Status' => 200], 200);
+            } else
                 return response()->json([
                     'message' => 'Sorry, new crops not added',
                     'Status' => 400

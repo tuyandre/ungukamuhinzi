@@ -23,7 +23,7 @@ class CreateCropfarmsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
             $table->unsignedBigInteger('crop_id');
             $table->foreign('crop_id')->references('id')->on('crops')->onUpdate('cascade');
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
