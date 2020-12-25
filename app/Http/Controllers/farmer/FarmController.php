@@ -38,7 +38,7 @@ class FarmController extends Controller
                 ->where('farm_id',$farmid)->where('cropfarms.status','=','1')
                 ->get();
             foreach($farmcrops as $frmcrop){
-                $farmcrop['cropfarmID']=$frmcrop->cropfarmID;
+                $farmcrop['cropfarmID']=$frmcrop->cropfarm_id;
                 $farmcrop['cropimage'] = $frmcrop->photo;
                 $farmcrop['cropname'] = $frmcrop->cropname;
 
@@ -49,7 +49,7 @@ class FarmController extends Controller
             $frm['location'] = $farms->location;
             $frm['plotsize']=$farms->plotsize;
             $frm['Status'] = $farms->status;
-//            $frm['farmcrop']=$farmcrop;
+            $frm['farmcrop']=$farmcrop;
             $result[]=$frm;
         }
         $count= $farm->count();

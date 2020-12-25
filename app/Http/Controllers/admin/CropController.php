@@ -40,10 +40,14 @@ class CropController extends Controller
         }
     }
     public function store(Request $request){
+        $file=$request->file('photo');
+        $filename =time().$file->getClientOriginalName();
+        $file->move(public_path('backend/crops'),$filename);
+
 
         $crop=new Crop();
         $crop->crops=$request['name'];
-        $crop->status="active";
+        $crop->photo="active";
         $crop->save();
         return response()->json(['crop' => "ok"], 200); //
 
