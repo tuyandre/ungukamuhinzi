@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\farmer;
 
+use App\Cropfarm;
 use App\Farm;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,6 +18,9 @@ class ExpenseController extends Controller
     {
         $this->user = JWTAuth::parseToken()->authenticate();
     }
+//    protected function user() {
+//        return JWTAuth::parseToken()->authenticate();
+//    }
     public function index(Request $request)
     {
 
@@ -125,6 +129,7 @@ class ExpenseController extends Controller
 
     public function newCrop(Request $request){
 
+//        return response()->json($request->token, 400);
         $validator=Validator::make($request->all(), [
             'crop_id' => 'required',
             'farm_id' => 'required',
@@ -143,12 +148,12 @@ class ExpenseController extends Controller
         $select=DB::table('farms')->where('farms.id','=',$id)->where('farms.status','=','1')->get();
         $count=$select->count();
         if($count>0){
-            $id=DB::table('farms')->where('id','=',$id)->update(array('status'=>'0'));
+//            $id=DB::table('farms')->where('id','=',$id)->update(array('status'=>'0'));
             $add = new Cropfarm();
             $add->crop_id = $request->crop_id;
             $add->farm_id=$request->farm_id;
             $add->season_id=$request->season_id;
-            $user=$this->user=JWTAuth::toUser($request->token);
+            $user=JWTAuth::toUser($request->token);
             if ($user->cropfarms()->save($add))
                 return response()->json(['Message' =>'New crops registered','Status' => 200],200);
             else

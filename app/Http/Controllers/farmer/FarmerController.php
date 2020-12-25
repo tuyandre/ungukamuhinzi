@@ -80,7 +80,7 @@ class FarmerController extends Controller
     }
     public function show(Request $request)
     {
-        $user=$this->user = JWTAuth::toUser($request->token);
+        $user=$this->user = JWTAuth::parseToken()->authenticate();
         $userid=$user->id;
         $farmers= $this->user
             ->farmers()
@@ -175,10 +175,10 @@ class FarmerController extends Controller
         $season=Season::all();
         $count=$season->count();
         if($count>0){
-            return response()->json(['Message'=>'Success','Data'=>$season,'Status'=>200,'Returned_data'=>$count]); //
+            return response()->json(['data'=>$season],200); //
         }
         else{
-            return response()->json(['Message'=>'Success','Data'=>$season,'Status'=>200],200);
+            return response()->json(['data'=>$season],200);
         }
 
     }
