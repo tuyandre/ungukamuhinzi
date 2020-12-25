@@ -322,9 +322,9 @@ class UserController extends Controller
         $crops=DB::table('crops')->get();
         $count=$crops->count();
         if($count>0){
-            return response()->json(['data'=>$crops],200);
+            return response()->json(['Data'=>$crops],200);
         }else{
-            return response()->json(['data'=>'There is no any kind of crops you have'],200);
+            return response()->json(['Data'=>'There is no any kind of crops you have'],200);
         }
     }
 }
