@@ -83,26 +83,18 @@
 
 
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="fa fa-tasks"></i>
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('admin.seasons.index')}}" aria-expanded="false">
+                        <i class="fa fa-calendar"></i>
                         <span class="hide-menu">Seasons</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="fa fa-tasks"></i>
-                        <span class="hide-menu">Farms</span>
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('admin.crops.index')}}" aria-expanded="false">
+                        <i class="fa fa-leaf"></i>
+                        <span class="hide-menu">Crops</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="fa fa-tasks"></i>
-                        <span class="hide-menu">Orders</span>
-                    </a>
-                </li>
-
-
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

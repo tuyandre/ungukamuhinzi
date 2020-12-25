@@ -11,7 +11,11 @@ class DashboardController extends Controller
     public function dashboard(){
         if (Auth::check())
         {
-            return view('backend.client.dashboard');
+            if (Auth::user()->level==2) {
+                return view('backend.client.dashboard');
+            }else{
+                Auth::logout();
+            }
         }
         else{
             return view('welcome');

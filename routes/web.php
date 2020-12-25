@@ -112,6 +112,57 @@ Route::group(['prefix' => '/Administration/'], function () {
 
 
 
+
+//    seasons routes
+
+    Route::get('Seasons/list', [
+        'uses' => 'admin\SeasonController@index',
+        'as' => 'admin.seasons.index'
+    ]);
+    Route::get('Seasons/get/list', [
+        'uses' => 'admin\SeasonController@seasons',
+        'as' => 'admin.seasons.allSeasons'
+    ]);
+
+    Route::post('Seasons/store', [
+        'uses' => 'admin\SeasonController@store',
+        'as' => 'admin.seasons.store'
+    ]);
+    Route::delete('Season/delete/{id}', [
+        'uses' => 'admin\SeasonController@delete',
+        'as' => 'admin.seasons.delete'
+    ]);
+
+
+
+//crops routes
+
+    Route::get('Crops/list', [
+        'uses' => 'admin\CropController@index',
+        'as' => 'admin.crops.index'
+    ]);
+    Route::get('Crops/get/list', [
+        'uses' => 'admin\CropController@allCrops',
+        'as' => 'admin.crops.allCrops'
+    ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     Route::get('member/detail/{id}', [
         'uses' => 'Admin\MemberController@memberDetail',
         'as' => 'members.memberDetail'
