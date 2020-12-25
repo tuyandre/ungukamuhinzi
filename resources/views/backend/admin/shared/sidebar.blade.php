@@ -72,16 +72,10 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="{{route('admin.customer.suspended')}}" class="sidebar-link">
+                            <a href="{{route('admin.farmer.index')}}" class="sidebar-link">
                                 {{--<i class="ti-settings mr-1 ml-1"></i>--}}
                                 <i class="fa fa-user-secret" aria-hidden="true"></i>
-                                <span class="hide-menu"> Suspended Customers </span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{route('admin.customer.active')}}" class="sidebar-link">
-                                <i class="fa fa-user-edit"></i>
-                                <span class="hide-menu">Active Customers  </span>
+                                <span class="hide-menu"> All Farmers </span>
                             </a>
                         </li>
                     </ul>

@@ -34,7 +34,6 @@
                                 <th>Telophone</th>
                                 <th>Identity</th>
                                 <th>Date</th>
-                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -81,32 +80,15 @@
                     {data: 'phone'},
                     {data: 'identity'},
                     {data: 'created_at'},
-                    {data: 'status',
-                        render: function (data, type, row) {
-                            if(row.status==1){
-                                return "<span class='bg-success'> Active</span>";
-                            }else {
-                                return "<span class='bg-warning'>Suspended</span>";
-                            }
-
-                        }},
                     {
                         data: 'id',
                         render: function (data, type, row) {
-                            if(row.status==1){
-                                return "<button class='btn btn-warning btn-sm btn-flat js-confirm' data-id='" + data +
-                                    "' data-url='/Administration/member/confirm/" + row.id + "'> <i class='fa fa-check'></i>Suspend</button>" +"<a  href='/Administration/member/detail/" + row.id + "' class='btn btn-info btn-sm btn-flat js-detail' data-id='" + data +
+
+                                return  "<a  href='/Administration/member/detail/" + row.id + "' class='btn btn-info btn-sm btn-flat js-detail' data-id='" + data +
                                     "' > <i class='fa fa-eye'></i>View</a>" +
                                     "<button class='btn btn-danger btn-sm btn-flat js-delete ' data-id='" + data +
                                     "' data-url='/Administration/member/delete/" + row.id + "'> <i class='fa fa-trash'></i>Delete</button>";
-                            }else {
-                                return "<button class='btn btn-success btn-sm btn-flat js-confirm' data-id='" + data +
-                                    "' data-url='/Administration/member/confirm/" + row.id + "'> <i class='fa fa-check'></i>Activate</button>" +
-                                    "<a  href='/Administration/member/detail/" + row.id + "' class='btn btn-info btn-sm btn-flat js-detail' data-id='" + data +
-                                    "' > <i class='fa fa-eye'></i>View</a>" +
-                                    "<button class='btn btn-danger btn-sm btn-flat js-delete ' data-id='" + data +
-                                    "' data-url='/Administration/member/delete/" + row.id + "'> <i class='fa fa-trash'></i>Delete</button>";
-                            }
+
 
                         }
                     }

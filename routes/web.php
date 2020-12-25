@@ -100,8 +100,15 @@ Route::group(['prefix' => '/Administration/'], function () {
     ]);
 
 
-
-
+//        customers routes
+    Route::get('Farmer/list', [
+        'uses' => 'admin\FarmerController@index',
+        'as' => 'admin.farmer.index'
+    ]);
+    Route::get('Farmer/get/list', [
+        'uses' => 'admin\FarmerController@allFarmer',
+        'as' => 'admin.farmer.allFarmer'
+    ]);
 
 
 

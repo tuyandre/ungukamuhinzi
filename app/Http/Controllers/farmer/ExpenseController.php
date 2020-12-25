@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+//use Tymon\JWTAuth\Facades\JWTAuth;
+
 use JWTAuth;
 class ExpenseController extends Controller
 {
@@ -146,7 +148,8 @@ class ExpenseController extends Controller
             $add->crop_id = $request->crop_id;
             $add->farm_id=$request->farm_id;
             $add->season_id=$request->season_id;
-            if ($this->user->cropfarms()->save($add))
+            $user=$this->user=JWTAuth::toUser($request->token);
+            if ($user->cropfarms()->save($add))
                 return response()->json(['Message' =>'New crops registered','Status' => 200],200);
             else
                 return response()->json([
