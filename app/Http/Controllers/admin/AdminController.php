@@ -67,7 +67,7 @@ class AdminController extends Controller
 
                 if(Auth::user()->status==1){
                     $user=Auth::user();
-                    $user['message']="Sussecc";
+                    $user['message']="Sussec";
                     return response()->json($user);
                 }else{
                     Auth::logout();

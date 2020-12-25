@@ -30,7 +30,7 @@ $(document).ready(function(){
             type:"POST",
             dataType:"JSON",
             success:function(data){
-                console.log(data);
+                // console.log(data);
                 let level=data.level;
 
                 $("div#loginSucces").html(data.message).attr("class","alert alert-success").css("display","block");
@@ -57,8 +57,8 @@ $(document).ready(function(){
         })
         .fail((x,j,s)=>{
        console.log(x,j,s);
-       console.log(x.responseJSON.Message);
-       $("div#loginSucces").html(x.responseJSON.Message).attr("class","alert alert-warning").css("display","block");
+       console.log(x.responseJSON.message);
+       $("div#loginSucces").html(x.responseJSON.message).attr("class","alert alert-warning").css("display","block");
        setTimeout(()=>{
           $("div#loginSucces").fadeOut();
        },2000)

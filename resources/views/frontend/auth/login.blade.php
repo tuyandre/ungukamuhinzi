@@ -132,7 +132,7 @@
                                     </div>
                                     <div class="col-md-10 col-sm-offset-1">
                                         <div class="text-center ">
-                                            <a href="#"><button type="button" class="btn btn-success btn-rounded-circle btn-block z-depth-0 my-4 btn-register1" id="lodinBtn0" type="submit">Sign in</button></a>
+                                            <button type="button" class="btn btn-success btn-rounded-circle btn-block z-depth-0 my-4 btn-register1" id="lodinBtn0" type="submit">Sign in</button>
                                         </div>
                                     </div>
                                 </form>

@@ -49,7 +49,7 @@ class FarmController extends Controller
             $frm['location'] = $farms->location;
             $frm['plotsize']=$farms->plotsize;
             $frm['Status'] = $farms->status;
-            $frm['farmcrop']=$farmcrop;
+//            $frm['farmcrop']=$farmcrop;
             $result[]=$frm;
         }
         $count= $farm->count();
