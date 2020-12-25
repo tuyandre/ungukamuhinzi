@@ -54,9 +54,9 @@ class FarmController extends Controller
         }
         $count= $farm->count();
         if($count>0){
-            return response()->json(['Message'=>'Success','Data'=>$result,'Status'=>200,'Returned_data'=>$count]); //
+            return response()->json(['data'=>$result],200); //
         } else{
-            return response()->json(['Message'=>'Success','Data'=>$result,'Status'=>200,'Returned_data'=>$count]);
+            return response()->json(['data'=>$result],200);
         }
         //
     }
@@ -277,7 +277,7 @@ class FarmController extends Controller
 
         $count=$farms->count();
         if($count>0){
-            return response()->json(['Message'=>'Success','Data'=>$both,'Returned_Data'=>$count,'Status'=>200]);
+            return response()->json(['Data'=>$both],200);
         }else{
             return response()->json(['Message'=>'Success','Data'=>$farms,'Returned_Data'=>$count,'Status'=>200]);
         }
