@@ -1,6 +1,6 @@
 @extends('backend.admin.shared.master')
 
-@section('title','Unguka|Customers')
+@section('title','Unguka|Farmer')
 @section('css')
     <link href="{{asset('/backend/admin/dashboard/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
     <link href="{{asset('/backend/admin/dashboard/css/dataTables.checkboxes.css')}}" rel="stylesheet">
@@ -11,7 +11,7 @@
           href="{{asset('/backend/admin/dashboard/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css')}}" rel="stylesheet">
 
 @endsection
-@section('items','Customers List ')
+@section('items','Farmer List ')
 @section('content')
 
     <div class="row">
@@ -84,7 +84,7 @@
                     data: 'id',
                     render: function (data, type, row) {
 
-                        return  "<a  href='/Administration/member/detail/" + row.id + "' class='btn btn-info btn-sm btn-flat js-detail' data-id='" + data +
+                        return  "<a  href='/Administration/Farmer/detail/" + row.id + "' class='btn btn-info btn-sm btn-flat js-detail' data-id='" + data +
                             "' > <i class='fa fa-eye'></i>View</a>" +
                             "<button class='btn btn-danger btn-sm btn-flat js-delete ' data-id='" + data +
                             "' data-url='/Administration/member/delete/" + row.id + "'> <i class='fa fa-trash'></i>Delete</button>";

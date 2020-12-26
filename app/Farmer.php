@@ -10,4 +10,9 @@ class Farmer extends Model
     protected $fillable=[
         'fname','lname','phone','identity','photo',
     ];
+
+    public function User()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

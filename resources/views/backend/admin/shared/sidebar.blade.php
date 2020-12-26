@@ -52,12 +52,12 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="fa fa-users"></i>
-                        <span class="hide-menu">Users</span>
-                    </a>
-                </li>
+{{--                <li class="sidebar-item">--}}
+{{--                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">--}}
+{{--                        <i class="fa fa-users"></i>--}}
+{{--                        <span class="hide-menu">Users</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd" href="#" aria-expanded="false">

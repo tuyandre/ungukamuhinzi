@@ -47,7 +47,7 @@ class CropController extends Controller
 
         $crop=new Crop();
         $crop->crops=$request['name'];
-        $crop->photo="active";
+        $crop->photo=$filename;
         $crop->save();
         return response()->json(['crop' => "ok"], 200); //
 

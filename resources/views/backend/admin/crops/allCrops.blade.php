@@ -3,9 +3,7 @@
 @section('title','Unguka|Crop')
 @section('css')
     <link href="{{asset('/backend/admin/dashboard/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
-    <link href="{{asset('/backend/admin/dashboard/css/dataTables.checkboxes.css')}}" rel="stylesheet">
-    <link href="{{asset('/backend/admin/dashboard/css/datatables.min.css')}}" rel="stylesheet">
-    <link href="{{asset('/css/buttons.dataTables.min.css')}}" rel="stylesheet">
+ <link href="{{asset('/backend/admin/dashboard/css/datatables.min.css')}}" rel="stylesheet">
   <link r type="text/css"
           href="{{asset('/backend/admin/dashboard/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css')}}" rel="stylesheet">
     <link href="{{asset('/backend/admin/dashboard/plugins/bower_components/dropify/dist/css/dropify.min.css')}}" rel="stylesheet">
@@ -69,7 +67,7 @@
                             <label for="recipient-name" class="control-label col-sm-3">Crops Photo</label>
                             <label class="col-sm-1 control-label">:</label>
                             <div class="col-sm-8">
-                                <input type="file" id="input-file-now" class="dropify" name="photo" accept="image/*" style="width: 100px !important;"/>
+                                <input type="file" id="input-file-now" class="dropify" name="photo" accept="image/*" />
                                 <span class="text-danger" id="tname" style="color: red"></span>
                             </div>
                         </div>
@@ -160,7 +158,16 @@
                 columns: [
 
                     {data: 'crops'},
-                    {data: 'crops'},
+                    {data: 'crops',
+                        render: function (data, type, row) {
+                        if (row.photo!=null){
+                            return "<img src='/backend/crops/"+row.photo+"' style='width: 60px !important;'>";
+                        }else{
+                            return "No Photo";
+                        }
+                        }
+
+                    },
                     {
                         data: 'id',
                         render: function (data, type, row) {
@@ -242,6 +249,8 @@
                     console.log(data);
 
                     if (data.crop == "ok") {
+                        table.destroy();
+                        myFunc();
                         btn.button('reset');
                         form[0].reset();
                         // reload the table

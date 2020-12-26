@@ -47,7 +47,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-    public function farmers(){
+    public function Farmer(){
 
         return $this->hasOne(Farmer::class);
     }
