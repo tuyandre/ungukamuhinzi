@@ -1,8 +1,8 @@
 $(document).ready(function(){
     let Levels = localStorage.getItem("level");
     let token = localStorage.getItem("Token");
-    console.log(token);    
-    var endpoint = "http://178.79.188.142:90/api/createFarms";
+    console.log(token);
+    var endpoint = "/Farmer/createFarms";
     $(".text-center.AddNewfarm").click(function(e){
         e.preventDefault();
         // alert("DONAT");
@@ -15,14 +15,13 @@ $(document).ready(function(){
             plotsize:plotSize
         }
         // console.log(farmer1);
+
         $.ajax({
             url:endpoint,
-            data:addFarm,
+            data:{addFarm,
+                "_token": "{{ csrf_token() }}"},
             type:"POST",
             dataType:"JSON",
-            beforeSend:function(xhr){
-                xhr.setRequestHeader('Authorization','Bearer'+token);
-            },
             success:function(data){
             if(data.Message === "Farm Registered"){
                 // console.log("byemeye");

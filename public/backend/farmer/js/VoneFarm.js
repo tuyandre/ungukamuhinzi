@@ -4,16 +4,13 @@ $(document).ready(function(){
     console.log(token);
 // <!- VIEW SINGLE DETAILS OF FARMER----------->
 
-var endpoint = "http://178.79.188.142:90/api/";
+var endpoint = "/Farmer/";
 $.ajax({
-    url:endpoint+"ShowFarm",
-    type:"POST",
+    url:endpoint+"viewFarms",
+    type:"GET",
     dataType:"JSON",
-    beforeSend:function(xhr){
-        xhr.setRequestHeader('Authorization','Bearer'+token);
-    },
     success:function(data){
-        console.log(data); 
+        console.log(data);
 
     }
     ,

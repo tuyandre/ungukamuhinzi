@@ -47,15 +47,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-    public function Farmer(){
+    public function farmers(){
 
         return $this->hasOne(Farmer::class);
     }
     public function farms(){
-        return $this->hasMany(Farm::class);
+        return $this->hasMany(App\Farm::class);
     }
     public function customers(){
-        return $this->hasMany(Customer::class);
+        return $this->hasMany(App\Customer::class);
     }
     public function expenses(){
         return $this->hasMany(Expense::class);

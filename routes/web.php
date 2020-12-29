@@ -211,6 +211,11 @@ Route::group(['prefix' => '/Farmer/'], function () {
         'uses' => 'farmer\DashboardController@dashboard',
         'as' => 'farmer.dashboard'
     ]);
+    Route::get('viewFarms', 'web\farmer\FarmController@index');
+    Route::get('Season', 'web\farmer\SeasonController@index');
+    Route::get('viewCrops', 'UserController@viewCrops');
+    Route::get('ShowFarmer', 'web\farmer\FarmerController@show');
+    Route::post('createFarms', 'web\farmer\FarmController@store');
 
 });
 
@@ -221,5 +226,6 @@ Route::group(['prefix' => '/Client/'], function () {
         'uses' => 'client\DashboardController@dashboard',
         'as' => 'client.dashboard'
     ]);
+
 
 });

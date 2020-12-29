@@ -3,17 +3,14 @@ $(document).ready(function(){
     let token = localStorage.getItem("Token");
     $('#bestvision').show();
 
-var endpoint = "http://178.79.188.142:90/api/";
+var endpoint = "/Farmer/";
 $.ajax({
     url:endpoint+"ShowFarmer",
-    type:"POST",
+    type:"GET",
     dataType:"JSON",
-    beforeSend:function(xhr){
-        xhr.setRequestHeader('Authorization','Bearer'+token);
-    },
     success:function(data){
         var finalData = data.Data[0];
-         console.log(finalData); 
+         console.log(finalData);
         // for(let f in finalData){
         //    console.log(finalData[f].fname);
         var topViewDiv = '<div class="form-group col-xs-6 col-md-1 profile-image"><div class="inner-addon right-addon"><img class="img-rounded top-profile-img" src="'+finalData.photo+'" alt=""></div></div><div class="col-md-3 "><h1 class="col-md-offset-3">'+finalData.fname+'</h1><p class="col-md-offset-3">'+finalData.phone+'</p></div>';

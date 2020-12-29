@@ -4,13 +4,13 @@ $(document).ready(function(){
     console.log("Season:"+token);
     // <!- SELECT ALL SEASONS------------>
 
-var endpoint = "http://178.79.188.142:90/api/";
+var endpoint = "/Farmer/";
 $.ajax({
     url:endpoint+"Season",
-    type:"POST",
+    type:"GET",
     dataType:"JSON",
     beforeSend:function(xhr){
-        
+
         xhr.setRequestHeader('Authorization','Bearer'+token);
     },
     success:function(data){
@@ -19,7 +19,7 @@ $.ajax({
         //    console.log(finalData[dt].id);
            $("#season-id").append(" <option value="+finalData[dt].id+"> "
            +finalData[dt].seasonLenght+"</option>"
-   
+
            );
         }
 
