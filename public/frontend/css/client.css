@@ -1,0 +1,46 @@
+.Delivered-btn,.Delivered-btn123{
+    border-radius: 17.799px;
+    padding: 6px;
+    font-size: 15px;
+    border: 1.72876px solid #BFBFBF;
+box-sizing: border-box;
+background: none;
+width: 30%;
+}
+.Delivered-btn1{
+    background: none;
+    border-radius: 17.799px;
+    padding: 6px;
+    color: black;
+    font-size: 15px;
+    border: 1.72876px solid #BFBFBF;
+box-sizing: border-box;
+}
+.Delivered-btn12{
+    background: none;
+    border-radius: 17.799px;
+    padding: 6px;
+    color: red;
+    font-size: 15px;
+    border: 1px solid red;
+box-sizing: border-box;
+width: 30%;
+float: center;
+}
+.Delivered-btn5{
+    border-radius: 17.799px;
+    padding: 6px;
+    font-size: 15px;
+    border: 1.72876px solid green;
+box-sizing: border-box;
+background: #87D37C;
+width: 40%;
+}
+
+.farmer-profile101 img{
+    background: url(../img/coffe.png);
+
+}
+.rightppp{
+    margin-top: 29px;
+}

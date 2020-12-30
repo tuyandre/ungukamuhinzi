@@ -1,0 +1,93 @@
+.float-right{
+    background: #FFFFFF;
+    box-shadow: 0px 1.42819px 35.7048px rgba(0, 0, 0, 0.08);
+    border-radius: 11.4255px !important; 
+    max-height: 154px; 
+}
+body{
+    background: #E5E5E5;
+}
+.notification img{
+    height: 10px;
+}
+.d-block1{
+    height: 20px !important;
+}
+.first-card{
+    background: #FFFFFF;
+    box-shadow: 0px 1.42819px 35.7048px rgba(0, 0, 0, 0.08);
+    border-radius: 11.4255px !important; 
+    max-height: 154px;  
+}
+
+
+.lib-panel {
+    margin-bottom: 20Px;
+}
+.lib-panel img {
+    width: 100%;
+    background-color: transparent;
+}
+
+.lib-panel .row,
+.lib-panel .col-md-6 {
+    padding: 0;
+    background-color: #FFFFFF;
+}
+
+
+.lib-panel .lib-row {
+    /* padding: 0 20px 0 20px; */
+}
+
+.lib-panel .lib-row.lib-header {
+    background-color: #FFFFFF;
+    font-size: 15px;
+    /* padding: 10px 20px 0 20px; */
+    font-weight: bold;
+}
+
+.lib-panel .lib-row.lib-header .lib-header-seperator {
+    height: 2px;
+    /* width: 26px; */
+    background-color: #d9d9d9;
+    margin: 7px 0 7px 0;
+    font-weight: normal;
+}
+.lib-panel .lib-row.lib-header .lib-header-seperator {
+    height: 2px;
+    /* width: 26px; */
+    background-color: #d9d9d9;
+    margin: 7px 0 7px 0;
+    font-weight: normal;
+}
+
+.lib-panel .lib-row.lib-desc {
+    position: relative;
+    height: 100%;
+    display: block;
+    font-size: 13px;
+}
+.lib-panel .lib-row.lib-desc a{
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    left: 20px;
+}
+
+.row-margin-bottom {
+    margin-bottom: 20px;
+}
+
+.box-shadow {
+    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
+}
+
+.no-padding {
+    padding: 0;
+}
+.lib-desc1{
+    /* height: 20px;
+    width: 30px; */
+}

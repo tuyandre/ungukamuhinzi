@@ -227,5 +227,17 @@ Route::group(['prefix' => '/Client/'], function () {
         'as' => 'client.dashboard'
     ]);
 
+    Route::get('order', [
+        'uses' => 'web\client\OrderController@index',
+        'as' => 'client.order.index'
+    ]);
+    Route::get('stock', [
+        'uses' => 'web\client\StockController@index',
+        'as' => 'client.stock.index'
+    ]);
+    Route::get('profile', [
+        'uses' => 'web\client\ProfileController@index',
+        'as' => 'client.profile.index'
+    ]);
 
 });
