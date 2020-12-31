@@ -88,6 +88,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-5 col-lg-5 col-md-offset-1 col-sm-12 col-xs-12" id="signup"  style="margin-top: 40px;">
                 <div class="panel1 panel-login">
                     <div class="panel-heading">

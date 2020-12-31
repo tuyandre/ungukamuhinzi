@@ -1,10 +1,12 @@
 @extends('frontend.shared.master')
 
-@section('title','UNG|Register')
+@section('title','UNG|Login')
 @section('css')
 
 @endsection
 @section('content')
+
+    <!-- SIGN UP FORM -->
     <div class="container index-container" id="sign-up-panel">
         <div class="row " id="carousel1">
             <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12" id="signupPanel">
@@ -52,7 +54,7 @@
                                                     <h5 class="text-center" style="color: black;">News Title</h5>
                                                 </a>
                                             </div>
-                                            <div class="item-box-blog-data" style="padding: 15px 15px;">
+                                            <div class="item-box-blog-data" style="padding: 5px 15px;">
                                             </div>
                                             <div class="item-box-blog-text col-md-12">
                                                 <p class="text-center">Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing.</p>
@@ -72,7 +74,7 @@
                                                     <h5 class="text-center" style="color: black;">News Title</h5>
                                                 </a>
                                             </div>
-                                            <div class="item-box-blog-data" style="padding: 15px 15px;">
+                                            <div class="item-box-blog-data" style="padding: 5px 15px;">
                                             </div>
                                             <div class="item-box-blog-text col-md-12">
                                                 <p class="text-center">Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing.</p>
@@ -88,23 +90,22 @@
             </div>
 
 
-
-
-
-            <div class="col-md-5 col-lg-5 col-md-offset-1 col-sm-12 col-xs-12" id="signup"  style="margin-top: 40px;margin-bottom: 80px;">
+            <div class="col-md-5 col-lg-5 col-md-offset-1 col-sm-12 col-xs-12" id="signup">
                 <div class="panel1 panel-login">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-md-6 col-md-offset-2">
-                                <a href="#" class="active" id="login-form-link">Sign In</a>
+                            <div class="col-md-6 col-md-offset-2" id="log-link">
+                                <a href="#" class="active" id="login-form-link">Login</a>
+                            </div>
+                            <div class="col-xs-6" hidden>
+                                <a href="#" id="register-form-link">Login</a>
                             </div>
                         </div>
                     </div>
-
-
                     <div class="row">
                         <div class="col-md-9 col-md-offset-2 mx-auto text-center">
-                            <div class="myform form ">
+                            <!-- <div class="col-md-8 mx-auto"> -->
+                            <div class="myform form donat-login ">
 
                                 <form class="formValidate" id="contactForm" action="#" method="post" name="login"    e.preventDefault();>
                                     {{ csrf_field() }}
@@ -127,8 +128,7 @@
                                         <div class="form-group password-forgotten">
 
                                             <a href="#" tabindex="5" id="forgot" class="forgot-password2">Forgot Password?</a>
-                                            <a href="{{url('/')}}" tabindex="3" class="forgot-password4" id="sign-in-button" style="margin-left: 10px">Sign Up</a>
-{{--                                            <a href="{{url('/')}}" tabindex="3" class="forgot-password4" id="sign-in-button">Sign Up</a>--}}
+                                            <a href="{{url('/')}}" tabindex="3" class="forgot-password4" id="sign-in-button">Sign Up</a>
                                         </div>
                                     </div>
                                     <div class="col-md-10 col-sm-offset-1">
@@ -138,21 +138,22 @@
                                     </div>
                                 </form>
 
-
                             </div>
+                            <!-- </div> -->
                         </div>
                     </div>
-
-
                 </div>
             </div>
 
         </div>
     </div>
+    <!--END OF SIGN UP FORM -->
+
 
 
 @endsection
 @section('js')
+    {{--    <script src="{{asset('frontend/js/SignUp.js')}}"></script>--}}
     <script src="{{asset('frontend/js/login.js')}}"></script>
 
 @endsection
